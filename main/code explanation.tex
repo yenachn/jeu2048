@@ -1,0 +1,21 @@
+
+
+i) initiation avec une matrice nulle de $4 \times 4$.
+
+\medskip
+\noindent ii) $i$ aléatoire dans $0 \to 3$, $j$ aléatoire dans $0 \to 3$. $t$ aléatoire dans $\{2,4\}$. assigner $t$ à $(i, j)$.
+
+\medskip
+\noindent iii) Conditions du jeu :\\
+	a) pour tous les $i$ dans $0 \to 3$ et $j$ dans $0 \to 3$, $m_{(i, j)} \neq m_{(i+1, j)}$ AND $m_{(i, j)} \neq m_{(i-1, j)}$ AND $m_{(i, j)} \neq m_{(i, j+1)}$ AND $m_{(i, j)} \neq m_{(i, j-1)}$ AND $m_{(i, j)} \neq 0$ --> fin du jeu\\
+	b) si pour tous les $i$ dans $0 \to 3$ et $j$ dans $0 \to 3$, il existe $m_{(i, j)}$ s.t. $m_{(i, j)} = 2048$ --> partie gagnée ; cependant le joueur peut continuer à jouer.
+
+\medskip
+\noindent iv) entrée du joueur (r l d u)
+for loop $(i:0 \to 3, n-i) $:\\
+avec abs$(n-i)$ :\\
+la ligne (ou la colonne ; en fonction de cela, $i$ ou $j$ est appelé $n$) initiale de la matrice dans la direction choisie gardent leurs valeurs.
+la ligne adjacente (abs$(n-1)$) : si le bloc adjacent dans le sens choisi est vide, ou de valeur $0$, alors et le bloc en n est modifié à la valeur $n-1$ et ensuite la valeur $n-1$ est modifiée à $0$. Dans le cas de $n-2$ et $n-3$, continuer une boucle pour vérifier les $n-a+k$ blocs.\\
+si le bloc adjacent a une valeur équivalente à la sienne, alors les valeurs fusionnent sur le bloc adjacent et le bloc original est modifié à $0$.
+si le bloc adjacent est différent de $0$ et de lui-même, alors les blocs original et adjacent gardent leurs valeurs.\\
+répéter.
