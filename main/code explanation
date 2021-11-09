@@ -1,41 +1,21 @@
-rules of 2048
 
-i) the game is played on a 4 by 4 grid, where each block in the grid can contain a number 2^n (n in N)
---> the latter is a direct corollary of the second and third rule
-ii) if two adjacent tiles have equivalent values then they have the possibility to merge (we sum the two values) upon being slid in the same direction
-iii) at each turn of the game, a random value in {2, 4} appears in an empty block (nulspace)
-iv) upon obtaining a block with the value 2048, the game is won; however, the player can continue playing
 
-struct 2048
+i) initiation avec une matrice nulle de $4 \times 4$.
 
-1) we initiate the game with a nul 4x4 matrix
-2) we select two random values i in {0,1,2,3} and j in {0,1,2,3} and place a random value in {2,4} in the coordinate (i, j)
-3) the game is played while the game has not ended.
-the condition for the end of the game is:
-if all blocks in the matrix are different from 0 and there are no equivalent adjacent blocks --> identifying adjacent blocks is simple, simply -+1 from the i OR j value.
-if there is a block with the value 2048, we output a game won sign.
-after certain values we can change the colors of the blocks.
-4) player input. the pieces slide in the chosen direction.
-we do this row by row.
-the first row (or column) of the matrix in the direction chosen keep their values.
-the second row: if the block adjacent in the direction chosen is empty, or of value 0, then and the adjacent block (in the previous row/column) is modified to its own value and then its value is modified to 0.
-if the adjacent block is equivalent to itself, then the values merge on the adjacent block and the original block is modified to 0.
-if the adjacent block is different from 0 and from itself, then the original and adjacent blocks keep their values.
-repeat with later rows/columns (for loop with i or j, depending on direction of slide)
+\medskip
+\noindent ii) $i$ aléatoire dans $0 \to 3$, $j$ aléatoire dans $0 \to 3$. $t$ aléatoire dans $\{2,4\}$. assigner $t$ à $(i, j)$.
 
-struct 2048
+\medskip
+\noindent iii) Conditions du jeu :\\
+	a) pour tous les $i$ dans $0 \to 3$ et $j$ dans $0 \to 3$, $m_{(i, j)} \neq m_{(i+1, j)}$ AND $m_{(i, j)} \neq m_{(i-1, j)}$ AND $m_{(i, j)} \neq m_{(i, j+1)}$ AND $m_{(i, j)} \neq m_{(i, j-1)}$ AND $m_{(i, j)} \neq 0$ --> fin du jeu\\
+	b) si pour tous les $i$ dans $0 \to 3$ et $j$ dans $0 \to 3$, il existe $m_{(i, j)}$ s.t. $m_{(i, j)} = 2048$ --> partie gagnée ; cependant le joueur peut continuer à jouer.
 
-1) nous commençons le jeu avec une matrice 4x4 nulle
-2) on choisit deux valeurs aléatoires i dans {0,1,2,3} et j dans {0,1,2,3} et on place une valeur aléatoire dans {2,4} dans la coordonnée (i, j)
-3) la partie est jouée alors que le jeu n'est pas terminé.
-la condition pour la fin du jeu est :
-si tous les blocs de la matrice sont différents de 0 et qu'il n'y a pas de blocs adjacents équivalents --> l'identification des blocs adjacents est simple, il suffit d'ajouter -+1 à la valeur i OU j.
-s'il y a un bloc avec la valeur 2048, on sort un signe de victoire de la partie.
-après certaines valeurs, nous pouvons changer les couleurs des blocs.
-4) entrée du joueur. les pièces glissent dans la direction choisie.
-nous faisons cela ligne par ligne.
-la premiere ligne (ou colonne) de la matrice dans la direction choisie (donc celui qui est le plus proche au mur de cette direction) gardent leurs valeurs.
-la deuxième ligne : si le bloc adjacent dans la direction choisie est vide, ou de valeur 0, alors et le bloc adjacent (dans la ligne/colonne précédente) est modifié à sa propre valeur et ensuite sa valeur est modifiée à 0.
-si le bloc adjacent est équivalent à lui-même, alors les valeurs fusionnent sur le bloc adjacent et le bloc original est modifié à 0.
-si le bloc adjacent est différent de 0 et de lui-même, alors les blocs original et adjacent gardent leurs valeurs.
-répéter avec les lignes/colonnes suivantes (boucle for avec i ou j, selon le sens du glissement)
+\medskip
+\noindent iv) entrée du joueur (r l d u)
+for loop $(i:0 \to 3, n-i) $:\\
+avec abs$(n-i)$ :\\
+la ligne (ou la colonne ; en fonction de cela, $i$ ou $j$ est appelé $n$) initiale de la matrice dans la direction choisie gardent leurs valeurs.
+la ligne adjacente (abs$(n-1)$) : si le bloc adjacent dans le sens choisi est vide, ou de valeur $0$, alors et le bloc en n est modifié à la valeur $n-1$ et ensuite la valeur $n-1$ est modifiée à $0$. Dans le cas de $n-2$ et $n-3$, continuer une boucle pour vérifier les $n-a+k$ blocs.\\
+si le bloc adjacent a une valeur équivalente à la sienne, alors les valeurs fusionnent sur le bloc adjacent et le bloc original est modifié à $0$.
+si le bloc adjacent est différent de $0$ et de lui-même, alors les blocs original et adjacent gardent leurs valeurs.\\
+répéter.
