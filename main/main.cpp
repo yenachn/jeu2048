@@ -18,7 +18,12 @@ void start_game(){
 bool end_game(){
   for (int i = 0; i <= 2; i++){
     for(int j = 0; j <= 2; j++){
-      if (minit[i][j] == minit[i][j+1] || minit[i][j] == minit[i+1][j] || minit[i][j] == 0){
+      if (minit[i][j] == minit[i][j+1] || minit[i][j] == minit[i+1][j]){
+        return false;
+      }
+    }
+    for(int j = 0; j <= 3; j++){
+      if (minit[i][j] == 0){
         return false;
       }
     }
