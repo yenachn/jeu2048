@@ -4,6 +4,7 @@
 #include <stdio.h>    
 #include <stdlib.h>   
 #include <time.h> 
+#include <conio.h>
 using namespace std;
 
 vector<vector<int>> minit;
@@ -33,6 +34,14 @@ bool win_game(){
         return true;
       }
     }
+  }
+  return false;
+}
+
+bool cont_game(){
+  /* input y/n */
+  if(/*input == y*/){
+    return true;
   }
   return false;
 }
@@ -112,6 +121,20 @@ void rgen(){
   }
 }
 
+void input(){
+
+}
+
 int main(){
     srand (time(NULL));
+    while(!end_game){
+      if(win_game){
+        /* add a marker on top corner of game */
+        if(!cont_game){
+          end_game=true;
+        }
+      }
+      input();
+    }
+    return 0;
 }
