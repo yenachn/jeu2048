@@ -131,6 +131,7 @@ void input(){
 
 int main(){
     srand (time(NULL));
+    start_game();
     while(!end_game){
       if(win_game){
         /* add a marker on top corner of game */
@@ -139,6 +140,14 @@ int main(){
         }
       }
       input();
+    }
+    if(end_game){
+      /* game over notice */
+      if(/* restart y/n = y */){
+        start_game();
+      } else{
+        /* end notice */
+      }
     }
     return 0;
 }
