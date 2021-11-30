@@ -14,6 +14,14 @@ Plateau plateauVide(){
   return init;
 };
 
+string empty(int i){
+  string res = "";
+  for(int j=0;j<i;j++){
+    res.push_back(' ');
+  }
+  return res;
+}
+
 string affichePlateau(Plateau plateau){
   string fulline = "\n";
   char s = '*';
@@ -37,10 +45,11 @@ string affichePlateau(Plateau plateau){
     res = res.append("*");
     for(int j = 0; j<=3; j++){
       string cur = to_string(plateau[i][j]);
-      for(int k=0;k<4-cur.length();k++){
-        res.push_back(' ');
-      }
+      int before = (c-cur.length())/2;
+      int after = c-(before+cur.length());
+      res.append(empty(before));
       res = res.append(cur);
+      res.append(empty(after));
       res = res.append("*");
     }
     res = res.append(fulline);

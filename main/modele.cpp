@@ -6,7 +6,7 @@
 #include <stdlib.h>   
 #include <time.h>
 #include <vector>
-#include<rgen.cpp>
+#include <rgen.cpp>
 using namespace std;
 
 typedef vector<vector<int> > Plateau;
