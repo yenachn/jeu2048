@@ -27,16 +27,21 @@ string affichePlateau(Plateau plateau){
   }
   int c;
   c = to_string(n).length();
-  for(int i=0; i<=17+4*(c-1); i++){
+  cout << c << endl;
+  for(int i=0; i<5+4*(c); i++){
     fulline.push_back(s);
   }
   fulline.push_back('\n');
   string res = fulline;
   for(int i = 0; i<=3; i++){
-    res = res.append("* ");
+    res = res.append("*");
     for(int j = 0; j<=3; j++){
-      res = res.append(to_string(plateau[i][j]));
-      res = res.append(" *");
+      string cur = to_string(plateau[i][j]);
+      for(int k=0;k<4-cur.length();k++){
+        res.push_back(' ');
+      }
+      res = res.append(cur);
+      res = res.append("*");
     }
     res = res.append(fulline);
   }
@@ -45,7 +50,8 @@ string affichePlateau(Plateau plateau){
 
 int main(){
   Plateau test = plateauVide();
-  test[0][1] = 12;
+  test[0][1] = 16;
+  test[3][3] = 4096;
   string res = affichePlateau(test);
   cout << res ;
   return 0;
