@@ -247,6 +247,7 @@ return ch1;
  *  @return le Plateau déplacé dans la direction
  **/
 Plateau deplacement(Plateau plateau, int direction){
+  printw("%d",direction);
   switch ( direction ) {
     case GAUCHE:
       printw("déplacement vers la GAUCHE");
@@ -291,13 +292,13 @@ string dessine(Plateau plateau){
   }
   int c;
   c = to_string(n).length();
-  for(int i=0; i<5+4*(c); i++){
+  for(int i=0; i<21+4*(c); i++){
     fulline.push_back(s);
   }
   fulline.push_back('\n');
   string res = fulline;
   for(int i = 0; i<=3; i++){
-    res = res.append("*");
+    res = res.append("*  ");
     for(int j = 0; j<=3; j++){
       string cur = to_string(plateau[i][j]);
       int before = (c-cur.length())/2;
@@ -305,7 +306,7 @@ string dessine(Plateau plateau){
       res.append(empty(before));
       res = res.append(cur);
       res.append(empty(after));
-      res = res.append("*");
+      res = res.append("  *  ");
     }
     res = res.append(fulline);
   }
@@ -348,25 +349,3 @@ bool estGagnant(Plateau plateau){
   return false;;
 }
   
-int main() {
-  srand(time(NULL));
-  Plateau init = plateauInitial();
-  Plateau old = plateauVide();
-  int c;
-  initscr();
-  keypad(stdscr, true);  
-  printw("Voici la configuration initiale, merci de presser une touche directionnelle.\n Pour arrêter le jeu, pressez q à tout moment \n");
-  printw(dessine(init).c_str());
-  do {
-      c = getch();
-      if(c != 255)clear();
-      old = init;
-      init = deplacement(init,c);
-      if (old != init){
-        init = rgen(init);
-      }
-      printw(dessine(init).c_str());
-  } while (c != 81);
-  endwin();
-  return 0;
-}
