@@ -53,17 +53,23 @@ int tireDeuxOuQuatre(){
  *  @return le Plateau une fois déplacé vers la gauche
  **/
 Plateau deplacementGauche(Plateau plateau){
-    Plateau newPlateau = plateau;
-    for (int i = 0; i <= 2; i++){
+  Plateau newPlateau = plateau;
+  for (int i = 0; i <= 2; i++){
+    for (int j = 0; j <= 2; j++){
+      if (newPlateau[i][j] != 0 && newPlateau[i][j] == newPlateau[i][j+1]){
+        newPlateau[i][j] = 2*newPlateau[i][j];
+        newPlateau[i][j+1] = 0;
+      }
+    } 
+  }
+  for (int i = 0; i <= 2; i++){
     for (int j = 0; j <= 2; j++){
       if (newPlateau[i][j] == 0){
         newPlateau[i][j] = newPlateau[i][j+1];
         newPlateau[i][j+1] = 0;
-      } else if (newPlateau[i][j] == newPlateau[i][j+1]){
-        newPlateau[i][j] = 2*newPlateau[i][j];
-        newPlateau[i][j+1] = 0;
       }
-    }
+      }
+    } 
   }
   return newPlateau;
 };
