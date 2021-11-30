@@ -6,7 +6,6 @@
 #include <stdlib.h>   
 #include <time.h>
 #include <vector>
-#include <rgen.cpp>
 using namespace std;
 
 typedef vector<vector<int> > Plateau;
@@ -26,6 +25,41 @@ Plateau plateauVide(){
   return init;
 }
 
+/** génère aléatoirement un 2 ou un 4 avec des probabilités respectives de 9/10 et 1/10
+ *  @return 2 ou 4
+ **/
+int tireDeuxOuQuatre(){ 
+  int i = rand()%10;
+  if (i == 9) {
+      return 4;
+  }
+  return 2;
+}
+
+vector<tuple<int, int>> coord =
+  {{0,0},{0,1}, {0,2}, {0,3},
+   {1,0}, {1,1}, {1,2}, {1,3},
+   {2,0}, {2,1}, {2,2}, {2,3}, 
+   {3,0}, {3,1}, {3,2}, {3,3}};
+
+void rgen(Plateau plateau){
+  int n = coord.size();
+  for(int i = 0; i<n-1; i++){
+    int j = i + (rand()%(n-i));
+    const tuple<int,int> temp = coord[i];
+    coord[i] = coord[j];
+    coord[j] = temp;
+  }
+  for(int i=0; i<n; i++){
+    int a = get<0>(coord[i]);
+    int b = get<1>(coord[i]);
+    int value = tireDeuxOuQuatre();
+    if(plateau[a][b] == 0){
+      plateau[a][b] = value;
+      break;
+    }
+  }
+}
 
 /** génère deux nombres sur des cases aléatoires d'un Plateau vide
  *  @return un Plateau en début de jeu
@@ -37,16 +71,7 @@ Plateau plateauInitial(){
   return init;
 }
 
-/** génère aléatoirement un 2 ou un 4 avec des probabilités respectives de 9/10 et 1/10
- *  @return 2 ou 4
- **/
-int tireDeuxOuQuatre(){ 
-  int i = rand()%10;
-  if i == 9 {
-      return 4;
-  }
-  return 2;
-}
+
 
 /** déplace les tuiles d'un Plateau vers la gauche et les combine si possible
  *  @param plateau le Plateau
@@ -61,7 +86,7 @@ Plateau deplacementGauche(Plateau plateau){
         newPlateau[i][j+1] = 0;
       }
     } 
-  }
+  };
   for (int i = 0; i <= 2; i++){
     for (int j = 0; j <= 2; j++){
       if (newPlateau[i][j] == 0){
@@ -70,7 +95,6 @@ Plateau deplacementGauche(Plateau plateau){
       }
       }
     } 
-  }
   return newPlateau;
 };
 
@@ -94,9 +118,8 @@ Plateau deplacementDroite(Plateau plateau){
         newPlateau[i][j] = newPlateau[i][j-1];
         newPlateau[i][j-1] = 0;
       }
-      }
-    } 
-  }
+    }
+  } 
   return newPlateau;
 }
 
@@ -165,12 +188,53 @@ Plateau deplacement(Plateau plateau, int direction){
       exit(-1);
   }
 }
+/*construit un string contenant i espaces*/
+string empty(int i){
+  string res = "";
+  for(int j=0;j<i;j++){
+    res.push_back(' ');
+  }
+  return res;
+}
 
 
 /** affiche un Plateau
  * @param p le Plateau
  **/
-string dessine(Plateau p);
+string dessine(Plateau plateau){
+  string fulline = "\n";
+  char s = '*';
+  int n = 0;
+  for(int i = 0; i<=3; i++){
+    for(int j = 0; j<=3; j++){
+      if(plateau[i][j]>n){
+        n = plateau[i][j];
+      }
+    }
+  }
+  int c;
+  c = to_string(n).length();
+  cout << c << endl;
+  for(int i=0; i<5+4*(c); i++){
+    fulline.push_back(s);
+  }
+  fulline.push_back('\n');
+  string res = fulline;
+  for(int i = 0; i<=3; i++){
+    res = res.append("*");
+    for(int j = 0; j<=3; j++){
+      string cur = to_string(plateau[i][j]);
+      int before = (c-cur.length())/2;
+      int after = c-(before+cur.length());
+      res.append(empty(before));
+      res = res.append(cur);
+      res.append(empty(after));
+      res = res.append("*");
+    }
+    res = res.append(fulline);
+  }
+  return res;
+}
 
 /** permet de savoir si une partie est terminée
  *  @param plateau un Plateau
@@ -206,4 +270,8 @@ bool estGagnant(Plateau plateau){
     }
   }
   return false;;
+}
+
+int main(){
+  return 0;
 }
