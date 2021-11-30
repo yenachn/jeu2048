@@ -46,7 +46,6 @@ int tireDeuxOuQuatre(){
       return 4;
   }
   return 2;
-
 }
 
 /** déplace les tuiles d'un Plateau vers la gauche et les combine si possible
