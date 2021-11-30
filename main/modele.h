@@ -43,9 +43,13 @@ Plateau plateauInitial(){
 /** génère aléatoirement un 2 ou un 4 avec des probabilités respectives de 9/10 et 1/10
  *  @return 2 ou 4
  **/
-int tireDeuxOuQuatre(){
-  int i = 2+2*(rand()%2);
-  return i;
+int tireDeuxOuQuatre(){ 
+  int i = rand()%10;
+  if i == 9 {
+      return 4;
+  }
+  return 2;
+
 }
 
 /** déplace les tuiles d'un Plateau vers la gauche et les combine si possible
