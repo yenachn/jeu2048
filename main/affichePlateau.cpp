@@ -1,7 +1,9 @@
 #include <iostream>
 
 void affichePlateau(Plateau plateau){
+
   string res = "";
+  string fulline = "\n";
   char s = '*';
   int n = 0;
   for(int i = 0; i<=3; i++){
@@ -14,16 +16,16 @@ void affichePlateau(Plateau plateau){
   int c;
   c = std::to_string(n).length();
   for(int i=0; i<=17+4*(c-1); i++){
-    res = res.append(s);
+    fulline.push_back(s);
   }
-  res = res.append("\n");
+  fulline.push_back('\n');
   int x = 0;
   for(int i = 0; i<=3; i++){
     res = res.append("* ");
     for(int j = 0; j<=3; j++){
-      res = res.append(to_string(plateau[i][j]);
+      res = res.append(to_string(plateau[i][j]));
       res = res.append(" *");
     }
-    res.append("\n");
+    res = res.append(fulline);
   }
 }
