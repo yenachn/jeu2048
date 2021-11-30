@@ -140,14 +140,14 @@ Plateau deplacementDroite(Plateau plateau){
   }
   for(int k = 0; k<=2;k++){
     for (int i = 0; i <= 3; i++){
-      for (int j = 2; j >= 0; j--){
+      for (int j = 1; j <= 3; j++){
         if (newPlateau[i][j] == 0){
-          newPlateau[i][j] = newPlateau[i][j+1];
-          newPlateau[i][j+1] = 0;
+          newPlateau[i][j] = newPlateau[i][j-1];
+          newPlateau[i][j-1] = 0;
         }
       }
     }
-  }   
+  }  
   return newPlateau;
 }
 
@@ -175,16 +175,16 @@ Plateau deplacementHaut(Plateau plateau){
       }
     } 
   }
-  for(int k = 0; k<=2;k++){
-    for (int i = 0; i <= 3; i++){
-      for (int j = 2; j >= 0; j--){
+  for(int k = 0; k<=2; k++) {
+    for (int i = 0; i <= 2; i++){
+      for (int j = 0; j <= 3; j++){
         if (newPlateau[i][j] == 0){
-          newPlateau[i][j] = newPlateau[i][j+1];
-          newPlateau[i][j+1] = 0;
-        }
+          newPlateau[i][j] = newPlateau[i+1][j];
+          newPlateau[i+1][j] = 0;
+        } 
       }
     }
-  }   
+  } 
   return newPlateau;
 };
 
@@ -214,16 +214,16 @@ Plateau deplacementBas(Plateau plateau){
       }
     } 
   }
-  for(int k = 0; k<=2;k++){
-    for (int i = 0; i <= 3; i++){
-      for (int j = 2; j >= 0; j--){
+  for(int k = 0; k<=2; k++) {
+    for (int i = 3; i >= 1; i--){
+      for (int j = 0; j <= 3; j++){
         if (newPlateau[i][j] == 0){
-          newPlateau[i][j] = newPlateau[i][j+1];
-          newPlateau[i][j+1] = 0;
-        }
+          newPlateau[i][j] = newPlateau[i-1][j];
+          newPlateau[i-1][j] = 0;
+        } 
       }
     }
-  }   
+  }
   return newPlateau;
 };
 
@@ -351,6 +351,7 @@ bool estGagnant(Plateau plateau){
 int main() {
   srand(time(NULL));
   Plateau init = plateauInitial();
+  Plateau old = plateauVide();
   int c;
   initscr();
   keypad(stdscr, true);  
@@ -359,7 +360,11 @@ int main() {
   do {
       c = getch();
       if(c != 255)clear();
-      init = rgen(deplacement(init,c));
+      old = init;
+      init = deplacement(init,c);
+      if (old != init){
+        init = rgen(init);
+      }
       printw(dessine(init).c_str());
   } while (c != 81);
   endwin();
