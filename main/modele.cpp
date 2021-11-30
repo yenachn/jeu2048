@@ -175,20 +175,30 @@ const int BAS = 3;
  *  @return le Plateau déplacé dans la direction
  **/
 Plateau deplacement(Plateau plateau, int direction){
-  switch ( direction ) {
-    case GAUCHE:
-      return deplacementGauche(plateau);
-    case DROITE:
-      return deplacementDroite(plateau);
-    case HAUT:
-      return deplacementHaut(plateau);
-    case BAS:
-      return deplacementBas(plateau);
-    default:
-      cerr << "Deplacement non-autorise!" << endl;
-      exit(-1);
-  }
-}
+    const int KEY_ARROW_CHAR1 = 224;
+    const int HAUT = 72;
+    const int BAS = 80;
+    const int GAUCHE = 75;
+    const int DROITE = 77;
+
+    unsigned char ch1 = _getch();
+    if (ch1 == KEY_ARROW_CHAR1)
+    {
+        unsigned char ch2 = _getch();
+        switch (ch2) {
+        case GAUCHE:
+          return deplacementGauche(plateau);
+        case DROITE:
+          return deplacementDroite(plateau);
+        case HAUT:
+          return deplacementHaut(plateau);
+        case BAS:
+          return deplacementBas(plateau);
+        default:
+          cerr << "Deplacement non-autorise!" << endl;
+          exit(-1);
+      }
+    }
 /*construit un string contenant i espaces*/
 string empty(int i){
   string res = "";
