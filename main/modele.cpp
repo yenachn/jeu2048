@@ -164,41 +164,37 @@ Plateau deplacementBas(Plateau plateau){
   return newPlateau;
 }
 
-const int GAUCHE = 0;
-const int DROITE = 1;
-const int HAUT = 2;
-const int BAS = 3;
-
+const int CHAR1 = 224;
+const int GAUCHE = 72;
+const int DROITE = 80;
+const int HAUT = 75;
+const int BAS = 77;
+int direction(){
+  unsigned char ch1 = _getch();
+  if (ch1 == KEY_ARROW_CHAR1){
+    unsigned char ch2 = _getch();}
+return ch2;
+}
 /** déplace les tuiles d'un Plateau dans la direction donnée et génère une nouvelle tuile si le déplacement est valide
  *  @param plateau le Plateau
  *  @param direction la direction
  *  @return le Plateau déplacé dans la direction
  **/
 Plateau deplacement(Plateau plateau, int direction){
-    const int KEY_ARROW_CHAR1 = 224;
-    const int HAUT = 72;
-    const int BAS = 80;
-    const int GAUCHE = 75;
-    const int DROITE = 77;
-
-    unsigned char ch1 = _getch();
-    if (ch1 == KEY_ARROW_CHAR1)
-    {
-        unsigned char ch2 = _getch();
-        switch (ch2) {
-        case GAUCHE:
-          return deplacementGauche(plateau);
-        case DROITE:
-          return deplacementDroite(plateau);
-        case HAUT:
-          return deplacementHaut(plateau);
-        case BAS:
-          return deplacementBas(plateau);
-        default:
-          cerr << "Deplacement non-autorise!" << endl;
-          exit(-1);
-      }
-    }
+  switch ( direction ) {
+    case GAUCHE:
+      return deplacementGauche(plateau);
+    case DROITE:
+      return deplacementDroite(plateau);
+    case HAUT:
+      return deplacementHaut(plateau);
+    case BAS:
+      return deplacementBas(plateau);
+    default:
+      cerr << "Deplacement non-autorise!" << endl;
+      exit(-1);
+  }
+}
 /*construit un string contenant i espaces*/
 string empty(int i){
   string res = "";
