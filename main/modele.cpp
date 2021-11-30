@@ -89,16 +89,20 @@ Plateau deplacementGauche(Plateau plateau){
       }
     } 
   };
-  for (int i = 0; i <= 2; i++){
-    for (int j = 0; j <= 2; j++){
-      if (newPlateau[i][j] == 0){
-        newPlateau[i][j] = newPlateau[i][j+1];
-        newPlateau[i][j+1] = 0;
+  for(int k = 0; k<=2;k++){
+    for (int i = 0; i <= 3; i++){
+      for (int j = 2; j >= 0; j--){
+        if (newPlateau[i][j] == 0){
+          newPlateau[i][j] = newPlateau[i][j+1];
+          newPlateau[i][j+1] = 0;
+        }
       }
-      }
-    } 
+    }
+  } 
   return newPlateau;
 };
+
+
 
 /** déplace les tuiles d'un Plateau vers la droite et les combine si possible
  *  @param plateau le Plateau
@@ -114,11 +118,13 @@ Plateau deplacementDroite(Plateau plateau){
       }
     } 
   }
-  for (int i = 0; i <= 2; i++){
-    for (int j = 2; j >= 0; j--){
-      if (newPlateau[i][j] == 0){
-        newPlateau[i][j] = newPlateau[i][j-1];
-        newPlateau[i][j-1] = 0;
+  for(int k = 0; k<=2;k++){
+    for (int i = 0; i <= 3; i++){
+      for (int j = 1; j <= 3; j++){
+        if (newPlateau[i][j] == 0){
+          newPlateau[i][j] = newPlateau[i][j-1];
+          newPlateau[i][j-1] = 0;
+        }
       }
     }
   } 
@@ -132,18 +138,27 @@ Plateau deplacementDroite(Plateau plateau){
 Plateau deplacementHaut(Plateau plateau){
   Plateau newPlateau = plateau;
   for (int i = 0; i <= 2; i++){
-    for (int j = 0; j <= 2; j++){
-      if (newPlateau[i][j] == 0){
-        newPlateau[i][j] = newPlateau[i+1][j];
-        newPlateau[i+1][j] = 0;
-      } else if (newPlateau[i][j] == newPlateau[i+1][j]){
+    for (int j = 0; j <= 3; j++){
+      if (newPlateau[i][j] != 0 && newPlateau[i][j] == newPlateau[i+1][j]){
         newPlateau[i][j] = 2*newPlateau[i][j];
         newPlateau[i+1][j] = 0;
+      }
+    } 
+  };
+  for(int k = 0; k<=2; k++) {
+    for (int i = 0; i <= 2; i++){
+      for (int j = 0; j <= 3; j++){
+        if (newPlateau[i][j] == 0){
+          newPlateau[i][j] = newPlateau[i+1][j];
+          newPlateau[i+1][j] = 0;
+        } 
       }
     }
   }
   return newPlateau;
 };
+
+
 
 /** déplace les tuiles d'un Plateau vers le bas et les combine si possible
  *  @param plateau le Plateau
@@ -151,19 +166,26 @@ Plateau deplacementHaut(Plateau plateau){
  **/
 Plateau deplacementBas(Plateau plateau){
   Plateau newPlateau = plateau;
-  for (int i = 2; i >= 0; i--){
-    for (int j = 0; j <= 2; j++){
-      if (newPlateau[i][j] == 0){
-        newPlateau[i][j] = newPlateau[i-1][j];
-        newPlateau[i-1][j] = 0;
-      } else if (newPlateau[i][j] == newPlateau[i-1][j]){
+  for (int i = 3; i >= 1; i--){
+    for (int j = 0; j <= 3; j++){
+      if (newPlateau[i][j] != 0 && newPlateau[i][j] == newPlateau[i-1][j]){
         newPlateau[i][j] = 2*newPlateau[i][j];
         newPlateau[i-1][j] = 0;
+      }
+    } 
+  };
+  for(int k = 0; k<=2; k++) {
+    for (int i = 3; i >= 1; i--){
+      for (int j = 0; j <= 3; j++){
+        if (newPlateau[i][j] == 0){
+          newPlateau[i][j] = newPlateau[i-1][j];
+          newPlateau[i-1][j] = 0;
+        } 
       }
     }
   }
   return newPlateau;
-}
+};
 
 const int CHAR1 = 224;
 const int GAUCHE = 72;
@@ -283,9 +305,16 @@ bool estGagnant(Plateau plateau){
 }
 
 int main(){
-  Plateau init = plateauInitial();
+  Plateau init = 
+  {{0, 2, 2, 0 },
+   {2, 4, 2, 0},
+   {0, 0, 0, 2},
+   {0, 0, 2, 0}
+  };
   cout << dessine(init) << endl;
-  cout << "depl gauche"<< endl << dessine(deplacement(init,75));
-  cout << "depl droite" << endl << dessine(deplacement(init,77));
+  cout << "move haut" << endl << dessine(deplacementHaut(init));
+  while(true){
+    cout << direction() << endl;
+  }
   return 0;
   }
