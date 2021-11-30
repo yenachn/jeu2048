@@ -18,7 +18,7 @@ typedef vector<vector<int> > Plateau;
  **/
 Plateau plateauVide(){
   Plateau init;
-  init = Plateau(3);
+  init = Plateau(4);
   for (int i = 0; i <= 3; i++){
     init[i] = {0, 0, 0, 0};
   };
@@ -42,7 +42,8 @@ vector<tuple<int, int>> coord =
    {2,0}, {2,1}, {2,2}, {2,3}, 
    {3,0}, {3,1}, {3,2}, {3,3}};
 
-void rgen(Plateau plateau){
+Plateau rgen(Plateau plateau){
+  Plateau res = plateau;
   int n = coord.size();
   for(int i = 0; i<n-1; i++){
     int j = i + (rand()%(n-i));
@@ -54,11 +55,12 @@ void rgen(Plateau plateau){
     int a = get<0>(coord[i]);
     int b = get<1>(coord[i]);
     int value = tireDeuxOuQuatre();
-    if(plateau[a][b] == 0){
-      plateau[a][b] = value;
+    if(res[a][b] == 0){
+      res[a][b] = value;
       break;
     }
   }
+  return res;
 }
 
 /** génère deux nombres sur des cases aléatoires d'un Plateau vide
@@ -66,11 +68,10 @@ void rgen(Plateau plateau){
  **/
 Plateau plateauInitial(){
   Plateau init = plateauVide();
-  rgen(init);
-  rgen(init);
+  init = rgen(init);
+  init = rgen(init);
   return init;
 }
-
 
 
 /** déplace les tuiles d'un Plateau vers la gauche et les combine si possible
@@ -214,7 +215,6 @@ string dessine(Plateau plateau){
   }
   int c;
   c = to_string(n).length();
-  cout << c << endl;
   for(int i=0; i<5+4*(c); i++){
     fulline.push_back(s);
   }
@@ -273,5 +273,9 @@ bool estGagnant(Plateau plateau){
 }
 
 int main(){
+  Plateau init = plateauInitial();
+  cout << dessine(init) << endl;
+  cout << "depl gauche"<< endl << dessine(deplacement(init,0));
+  cout << "depl droite" << endl << dessine(deplacement(init,1));
   return 0;
-}
+  }
