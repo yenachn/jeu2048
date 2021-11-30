@@ -6,6 +6,7 @@
 #include <stdlib.h>   
 #include <time.h>
 #include <vector>
+#include<rgen.cpp>
 using namespace std;
 
 typedef vector<vector<int> > Plateau;
@@ -13,12 +14,12 @@ typedef vector<vector<int> > Plateau;
  */
 
 
-
 /** génère un Plateau de dimensions 4*4 ne contenant que des 0
  *  @return un Plateau vide
  **/
 Plateau plateauVide(){
   Plateau init;
+  init = Plateau(3);
   for (int i = 0; i <= 3; i++){
     init[i] = {0, 0, 0, 0};
   };
@@ -31,12 +32,8 @@ Plateau plateauVide(){
  **/
 Plateau plateauInitial(){
   Plateau init = plateauVide();
-  int i1 = rand()%4;
-  int j1 = rand()%4;
-  int i2 = rand()%4;
-  int j2 = rand()%4;
-  init[i1][j1] = 2;
-  init[i2][j2] = 2;
+  rgen(init);
+  rgen(init);
   return init;
 }
 

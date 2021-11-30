@@ -1,13 +1,13 @@
 #include <iostream>
 
-void affichePlateau(){
+void affichePlateau(Plateau plateau){
 
   char s = '*';
   int n = 0;
   for(int i = 0; i<=3; i++){
     for(int j = 0; j<=3; j++){
-      if(init[i][j]>n){
-        n = init[i][j];
+      if(plateau[i][j]>n){
+        n = plateau[i][j];
       }
     }
   }
@@ -21,7 +21,7 @@ void affichePlateau(){
   for(int i = 0; i<=3; i++){
     cout << "* ";
     for(int j = 0; j<=3; j++){
-      cout << init[i][j];
+      cout << plateau[i][j];
       cout << " *";
     }
     cout << endl;
