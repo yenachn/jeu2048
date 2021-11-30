@@ -81,6 +81,16 @@ Plateau plateauInitial(){
  **/
 Plateau deplacementGauche(Plateau plateau){
   Plateau newPlateau = plateau;
+  for(int k = 0; k<=2;k++){
+    for (int i = 0; i <= 3; i++){
+      for (int j = 2; j >= 0; j--){
+        if (newPlateau[i][j] == 0){
+          newPlateau[i][j] = newPlateau[i][j+1];
+          newPlateau[i][j+1] = 0;
+        }
+      }
+    }
+  } 
   for (int i = 0; i <= 3; i++){
     for (int j = 0; j <= 2; j++){
       if (newPlateau[i][j] != 0 && newPlateau[i][j] == newPlateau[i][j+1]){
@@ -88,7 +98,7 @@ Plateau deplacementGauche(Plateau plateau){
         newPlateau[i][j+1] = 0;
       }
     } 
-  };
+  }
   for(int k = 0; k<=2;k++){
     for (int i = 0; i <= 3; i++){
       for (int j = 2; j >= 0; j--){
@@ -110,14 +120,6 @@ Plateau deplacementGauche(Plateau plateau){
  **/
 Plateau deplacementDroite(Plateau plateau){
   Plateau newPlateau = plateau;
-  for (int i = 0; i <= 3; i++){
-    for (int j = 3; j >= 1; j--){
-      if (newPlateau[i][j] != 0 && newPlateau[i][j] == newPlateau[i][j-1]){
-        newPlateau[i][j] = 2*newPlateau[i][j];
-        newPlateau[i][j-1] = 0;
-      }
-    } 
-  }
   for(int k = 0; k<=2;k++){
     for (int i = 0; i <= 3; i++){
       for (int j = 1; j <= 3; j++){
@@ -128,6 +130,24 @@ Plateau deplacementDroite(Plateau plateau){
       }
     }
   } 
+  for (int i = 0; i <= 3; i++){
+    for (int j = 3; j >= 1; j--){
+      if (newPlateau[i][j] != 0 && newPlateau[i][j] == newPlateau[i][j-1]){
+        newPlateau[i][j] = 2*newPlateau[i][j];
+        newPlateau[i][j-1] = 0;
+      }
+    } 
+  }
+  for(int k = 0; k<=2;k++){
+    for (int i = 0; i <= 3; i++){
+      for (int j = 2; j >= 0; j--){
+        if (newPlateau[i][j] == 0){
+          newPlateau[i][j] = newPlateau[i][j+1];
+          newPlateau[i][j+1] = 0;
+        }
+      }
+    }
+  }   
   return newPlateau;
 }
 
@@ -137,14 +157,6 @@ Plateau deplacementDroite(Plateau plateau){
  **/
 Plateau deplacementHaut(Plateau plateau){
   Plateau newPlateau = plateau;
-  for (int i = 0; i <= 2; i++){
-    for (int j = 0; j <= 3; j++){
-      if (newPlateau[i][j] != 0 && newPlateau[i][j] == newPlateau[i+1][j]){
-        newPlateau[i][j] = 2*newPlateau[i][j];
-        newPlateau[i+1][j] = 0;
-      }
-    } 
-  };
   for(int k = 0; k<=2; k++) {
     for (int i = 0; i <= 2; i++){
       for (int j = 0; j <= 3; j++){
@@ -155,6 +167,24 @@ Plateau deplacementHaut(Plateau plateau){
       }
     }
   }
+  for (int i = 0; i <= 2; i++){
+    for (int j = 0; j <= 3; j++){
+      if (newPlateau[i][j] != 0 && newPlateau[i][j] == newPlateau[i+1][j]){
+        newPlateau[i][j] = 2*newPlateau[i][j];
+        newPlateau[i+1][j] = 0;
+      }
+    } 
+  }
+  for(int k = 0; k<=2;k++){
+    for (int i = 0; i <= 3; i++){
+      for (int j = 2; j >= 0; j--){
+        if (newPlateau[i][j] == 0){
+          newPlateau[i][j] = newPlateau[i][j+1];
+          newPlateau[i][j+1] = 0;
+        }
+      }
+    }
+  }   
   return newPlateau;
 };
 
@@ -166,14 +196,6 @@ Plateau deplacementHaut(Plateau plateau){
  **/
 Plateau deplacementBas(Plateau plateau){
   Plateau newPlateau = plateau;
-  for (int i = 3; i >= 1; i--){
-    for (int j = 0; j <= 3; j++){
-      if (newPlateau[i][j] != 0 && newPlateau[i][j] == newPlateau[i-1][j]){
-        newPlateau[i][j] = 2*newPlateau[i][j];
-        newPlateau[i-1][j] = 0;
-      }
-    } 
-  };
   for(int k = 0; k<=2; k++) {
     for (int i = 3; i >= 1; i--){
       for (int j = 0; j <= 3; j++){
@@ -184,6 +206,24 @@ Plateau deplacementBas(Plateau plateau){
       }
     }
   }
+  for (int i = 3; i >= 1; i--){
+    for (int j = 0; j <= 3; j++){
+      if (newPlateau[i][j] != 0 && newPlateau[i][j] == newPlateau[i-1][j]){
+        newPlateau[i][j] = 2*newPlateau[i][j];
+        newPlateau[i-1][j] = 0;
+      }
+    } 
+  }
+  for(int k = 0; k<=2;k++){
+    for (int i = 0; i <= 3; i++){
+      for (int j = 2; j >= 0; j--){
+        if (newPlateau[i][j] == 0){
+          newPlateau[i][j] = newPlateau[i][j+1];
+          newPlateau[i][j+1] = 0;
+        }
+      }
+    }
+  }   
   return newPlateau;
 };
 
@@ -310,17 +350,12 @@ bool estGagnant(Plateau plateau){
   
 int main() {
   srand(time(NULL));
-  Plateau init = 
-  {{0, 2, 2, 0 },
-   {2, 4, 2, 0},
-   {0, 0, 0, 2},
-   {0, 0, 2, 0}
-  };
+  Plateau init = plateauInitial();
   int c;
   initscr();
-  keypad(stdscr, true);
-  printw(dessine(init).c_str());
+  keypad(stdscr, true);  
   printw("Voici la configuration initiale, merci de presser une touche directionnelle.\n Pour arrêter le jeu, pressez q à tout moment \n");
+  printw(dessine(init).c_str());
   do {
       c = getch();
       if(c != 255)clear();
