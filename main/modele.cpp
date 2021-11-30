@@ -6,6 +6,7 @@
 #include <stdlib.h>   
 #include <time.h>
 #include <vector>
+#include <curses.h>
 using namespace std;
 
 typedef vector<vector<int> > Plateau;
@@ -169,11 +170,14 @@ const int GAUCHE = 72;
 const int DROITE = 80;
 const int HAUT = 75;
 const int BAS = 77;
+const int ENTER = 13;
+const int SPACE = 32;
+
 int direction(){
-  unsigned char ch1 = _getch();
-  if (ch1 == KEY_ARROW_CHAR1){
-    unsigned char ch2 = _getch();}
-return ch2;
+  unsigned char ch1 = getch();
+  if (ch1 == CHAR1){
+    ch1 = getch();}
+return ch1;
 }
 /** déplace les tuiles d'un Plateau dans la direction donnée et génère une nouvelle tuile si le déplacement est valide
  *  @param plateau le Plateau
@@ -281,7 +285,7 @@ bool estGagnant(Plateau plateau){
 int main(){
   Plateau init = plateauInitial();
   cout << dessine(init) << endl;
-  cout << "depl gauche"<< endl << dessine(deplacement(init,0));
-  cout << "depl droite" << endl << dessine(deplacement(init,1));
+  cout << "depl gauche"<< endl << dessine(deplacement(init,75));
+  cout << "depl droite" << endl << dessine(deplacement(init,77));
   return 0;
   }
