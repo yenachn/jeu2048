@@ -1,8 +1,20 @@
 #include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
 
-void affichePlateau(Plateau plateau){
+typedef vector<vector<int>> Plateau;
 
-  string res = "";
+Plateau plateauVide(){
+  Plateau init;
+  init = Plateau(4);
+  for (int i = 0; i <= 3; i++){
+    init[i] = {0, 0, 0, 0};
+  };
+  return init;
+};
+
+string affichePlateau(Plateau plateau){
   string fulline = "\n";
   char s = '*';
   int n = 0;
@@ -14,12 +26,12 @@ void affichePlateau(Plateau plateau){
     }
   }
   int c;
-  c = std::to_string(n).length();
+  c = to_string(n).length();
   for(int i=0; i<=17+4*(c-1); i++){
     fulline.push_back(s);
   }
   fulline.push_back('\n');
-  int x = 0;
+  string res = fulline;
   for(int i = 0; i<=3; i++){
     res = res.append("* ");
     for(int j = 0; j<=3; j++){
@@ -28,4 +40,14 @@ void affichePlateau(Plateau plateau){
     }
     res = res.append(fulline);
   }
+  return res;
+};
+
+int main(){
+  Plateau test = plateauVide();
+  test[0][1] = 12;
+  string res = affichePlateau(test);
+  cout << res ;
+  return 0;
 }
+
