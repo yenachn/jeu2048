@@ -81,7 +81,7 @@ Plateau plateauInitial(){
  **/
 Plateau deplacementGauche(Plateau plateau){
   Plateau newPlateau = plateau;
-  for (int i = 0; i <= 2; i++){
+  for (int i = 0; i <= 3; i++){
     for (int j = 0; j <= 2; j++){
       if (newPlateau[i][j] != 0 && newPlateau[i][j] == newPlateau[i][j+1]){
         newPlateau[i][j] = 2*newPlateau[i][j];
@@ -110,8 +110,8 @@ Plateau deplacementGauche(Plateau plateau){
  **/
 Plateau deplacementDroite(Plateau plateau){
   Plateau newPlateau = plateau;
-  for (int i = 0; i <= 2; i++){
-    for (int j = 2; j >= 0; j--){
+  for (int i = 0; i <= 3; i++){
+    for (int j = 3; j >= 1; j--){
       if (newPlateau[i][j] != 0 && newPlateau[i][j] == newPlateau[i][j-1]){
         newPlateau[i][j] = 2*newPlateau[i][j];
         newPlateau[i][j-1] = 0;
@@ -188,10 +188,10 @@ Plateau deplacementBas(Plateau plateau){
 };
 
 const int CHAR1 = 224;
-const int GAUCHE = 72;
-const int DROITE = 80;
-const int HAUT = 75;
-const int BAS = 77;
+const int GAUCHE = 260;
+const int DROITE = 261;
+const int HAUT = 259;
+const int BAS = 258;
 const int ENTER = 13;
 const int SPACE = 32;
 
@@ -209,16 +209,20 @@ return ch1;
 Plateau deplacement(Plateau plateau, int direction){
   switch ( direction ) {
     case GAUCHE:
+      printw("déplacement vers la GAUCHE");
       return deplacementGauche(plateau);
     case DROITE:
+      printw("déplacement vers la DROITE");
       return deplacementDroite(plateau);
     case HAUT:
+      printw("déplacement vers le HAUT");
       return deplacementHaut(plateau);
     case BAS:
+      printw("déplacement vers le BAS");
       return deplacementBas(plateau);
     default:
-      cerr << "Deplacement non-autorise!" << endl;
-      exit(-1);
+      printw("Deplacement non-autorise!");
+      return plateau;
   }
 }
 /*construit un string contenant i espaces*/
@@ -303,18 +307,26 @@ bool estGagnant(Plateau plateau){
   }
   return false;;
 }
-
-int main(){
+  
+int main() {
+  srand(time(NULL));
   Plateau init = 
   {{0, 2, 2, 0 },
    {2, 4, 2, 0},
    {0, 0, 0, 2},
    {0, 0, 2, 0}
   };
-  cout << dessine(init) << endl;
-  cout << "move haut" << endl << dessine(deplacementHaut(init));
-  while(true){
-    cout << direction() << endl;
-  }
+  int c;
+  initscr();
+  keypad(stdscr, true);
+  printw(dessine(init).c_str());
+  printw("Voici la configuration initiale, merci de presser une touche directionnelle.\n Pour arrêter le jeu, pressez q à tout moment \n");
+  do {
+      c = getch();
+      if(c != 255)clear();
+      init = rgen(deplacement(init,c));
+      printw(dessine(init).c_str());
+  } while (c != 81);
+  endwin();
   return 0;
-  }
+}

@@ -1,4 +1,4 @@
-#include <2048.cpp>
+#include "modele.cpp"
 
 int main(){
     srand (time(NULL));
@@ -9,3 +9,5 @@ int main(){
         cerr << "Vous avez gagné, Bravo !" << endl;
       }
     }
+  return 0
+}
