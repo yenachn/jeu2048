@@ -14,12 +14,6 @@ int main() {
   startagain:
   srand(time(NULL));
   Plateau init = plateauInitial();
-  init = 
-    {{2,8,0,0},
-     {16,2048,4,0},
-     {2,4,32,4},
-     {16,2,8,2}
-    };
   Plateau old = plateauVide();
   int c;
   bool cont = false;
@@ -45,10 +39,10 @@ int main() {
     printw("Vous avez gagné, BRAVO !, pour recommencer une partie, appuyez sur r, pour quitter, sur q.\nSi vous souhaitez continuer votre partie actuelle, cliquez sur n \'importe quelle autre touche");
     c = getch();
       switch(c) {
-        case 114:
+        case r:
           clear();
           goto startagain;
-        case 113:
+        case q:
           goto end;
         default:     
           clear();
@@ -63,7 +57,7 @@ int main() {
   {
     printw("partie terminée ! pour recommencer, pressez r, sinon, pressez n'importe quelle autre touche");
     c = getch();
-    if(c==113)goto startagain;
+    if(c==r)goto startagain;
     else goto end;
   }
 
