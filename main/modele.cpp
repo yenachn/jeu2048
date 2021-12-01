@@ -43,6 +43,12 @@ vector<tuple<int, int>> coord =
    {2,0}, {2,1}, {2,2}, {2,3}, 
    {3,0}, {3,1}, {3,2}, {3,3}};
 
+
+/** Rajoute avec soit un 2, soit un 4 avec les probabilités souhaitées d'apparition, dans l'une des cases vides.
+ *  L'algorithme utilisé écrit se base suyr l'algorithme de permutation aléatoire de Fisher-Yates
+ *  @param plateau un Plateau
+ *  @return un nouveau plateau res, correspondant à plateau dans lequel a été ajouté un 2 ou un 4 dans l'une des cases vides.
+ **/
 Plateau rgen(Plateau plateau){
   Plateau res = plateau;
   int n = coord.size();
@@ -227,20 +233,18 @@ Plateau deplacementBas(Plateau plateau){
   return newPlateau;
 };
 
-const int CHAR1 = 224;
+
+/* keycodes associés aux touches utilisées*/
 const int GAUCHE = 260;
 const int DROITE = 261;
 const int HAUT = 259;
 const int BAS = 258;
 const int ENTER = 13;
 const int SPACE = 32;
+const int r = 114;
+const int q = 113;
 
-int direction(){
-  unsigned char ch1 = getch();
-  if (ch1 == CHAR1){
-    ch1 = getch();}
-return ch1;
-}
+
 /** déplace les tuiles d'un Plateau dans la direction donnée et génère une nouvelle tuile si le déplacement est valide
  *  @param plateau le Plateau
  *  @param direction la direction
@@ -266,7 +270,10 @@ Plateau deplacement(Plateau plateau, int direction){
       return plateau;
   }
 }
-/*construit un string contenant i espaces*/
+/**  construit un string contenant i espaces
+ *  @param i un entier
+ *  @return un string contenant i esaces
+ **/
 string empty(int i){
   string res = "";
   for(int j=0;j<i;j++){
@@ -349,3 +356,23 @@ bool estGagnant(Plateau plateau){
   return false;;
 }
   
+
+/** Calcule le score associé à un tableau
+ * sachant que tout chiffre plus gros que 2 est forcément combinaison 
+ * d'autres chiffres (sauf 4 en cas d'apparition spontanée, cas non pris en compte),
+ *  il suffit d'additionner tous les chiffres plus gros que 2 pour obtenir le score de la partie
+ * @param plateau un Plateau
+ * @return un entier correspondant au score associé au plateau 
+ **/
+int score(Plateau plateau){
+  int res = 0;
+  for(int i=0;i<=3;i++){
+    for (int j = 0; j<= 3; i++)
+    {
+      if(plateau[i][j]>2){
+        res+=plateau[i][j];
+      }
+    }
+  }
+  return res;
+}
