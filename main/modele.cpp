@@ -58,16 +58,18 @@ Plateau rgen(Plateau plateau){
     coord[i] = coord[j];
     coord[j] = temp;
   }
+  int value = tireDeuxOuQuatre();
+  int a;
+  int b;
   for(int i=0; i<n; i++){
-    int a = get<0>(coord[i]);
-    int b = get<1>(coord[i]);
-    int value = tireDeuxOuQuatre();
+    a = get<0>(coord[i]);
+    b = get<1>(coord[i]);
     if(res[a][b] == 0){
       res[a][b] = value;
-      break;
+      return res;
     }
   }
-  return res;
+  return res; //dans le cas où la matrice est pleine (mais encore jouable), on ne rajoute rien dedans.
 }
 
 /** génère deux nombres sur des cases aléatoires d'un Plateau vide
