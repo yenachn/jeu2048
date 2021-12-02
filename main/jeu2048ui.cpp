@@ -28,12 +28,24 @@ void set_color(Grid *grid,Plateau plateau){
 	}
 }
 
+void merge_swap(Grid *grid, Plateau plateau){
+	for (int i = 0; i <= 3; i++){
+		for (int j = 0; j <= 3; i++){
+
+		}
+	}
+}
+
 void draw_grid(RenderWindow *window ,Grid *grid){
 	for (int i = 0; i < 3; i++){
 		for (int j = 0; j < 3; i++){
 			(*window).draw((*grid)[i][j]);
 		}
 	}
+}
+
+void set_score(int score, Plateau plateau){
+
 }
 
 int main() {
