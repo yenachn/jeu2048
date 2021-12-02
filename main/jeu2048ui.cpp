@@ -16,7 +16,7 @@ Grid init_grid(){
 	grid = Grid(4);
 	for (int i = 0; i <= 3; i++){
 		for (int j = 0; j <= 3; j++){
-			RectangleShape rectangle(Vector2f(290.f,290.f));
+			RectangleShape rectangle(Vector2f(90.f,90.f));
 			grid[i].push_back(rectangle);		
 		}	
 	}
@@ -25,16 +25,16 @@ Grid init_grid(){
 
 void set_positions(Grid *grid){
 	for (int i = 0; i <= 3; i++){
-		for (int j = 0; j <= 3; i++)
+		for (int j = 0; j <= 3; j++)
 		{
-			(*grid)[i][j].setPosition(Vector2f(i*300.f, j*300.f));
+			(*grid)[i][j].setPosition(Vector2f(i*100.f, j*100.f));
 		}
 	}
 }
 
 void set_color(Grid *grid,Plateau plateau){
 	for (int i = 0; i <= 3; i++){
-		for (int j = 0; j <= 3; i++){
+		for (int j = 0; j <= 3; j++){
 			(*grid)[i][j].setFillColor(Color(max(int(log2(plateau[i][j])*64),255),0,0));
 		}
 	}
@@ -50,7 +50,7 @@ void merge_swap(Grid *grid, Plateau plateau){
 
 void draw_grid(RenderWindow *window ,Grid *grid){
 	for (int i = 0; i <= 3; i++){
-		for (int j = 0; j <= 3; i++){
+		for (int j = 0; j <= 3; j++){
 			(*window).draw((*grid)[i][j]);
 		}
 	}
@@ -63,9 +63,9 @@ void set_score(int score, Plateau plateau){
 int main() {
 	Plateau init = plateauInitial();
 	RenderWindow window(VideoMode(1000, 1000), "jeu2048");
-	Grid grid;
+	Grid grid = init_grid();
 	set_positions(&grid);
-	window.clear(Color::White);
+	window.clear(Color::Black);
 	while (window.isOpen()){
 		set_color(&grid,init);
 		Event event;
