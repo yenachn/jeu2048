@@ -2,6 +2,8 @@
 #include <string>
 #include <vector>
 #include <math.h>  
+#include <stdio.h>    
+#include <stdlib.h>   
 #include <SFML/Graphics.hpp>
 #include "modele.cpp"
 
@@ -9,7 +11,8 @@ using namespace sf;
 using namespace std;
 
 typedef vector<vector<RectangleShape>> Grid;
-typedef vector<RectangleShape> Row;
+typedef vector<vector<Text>> TextGrid;
+
 
 Grid init_grid(){
 	Grid grid;
@@ -51,10 +54,32 @@ void draw_grid(RenderWindow *window ,Grid *grid){
 	}
 }
 
+void draw_text(RenderWindow *window,Plateau *plateau){
+	for(int i = 0; i <= 3;i++){
+		vector<Text> row;
+		for(int j = 0;j <=3; j++){
+			Text text;
+			Font font;
+			string str = to_string((*plateau)[i][j]);
+			int c = str.length();
+			font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeSans.ttf");
+			text.setFont(font);
+			text.setFillColor(Color::Black);
+			text.setCharacterSize(30);
+			text.setString(str);
+			text.setPosition(Vector2f(i*100.f+(90-15*c)/2, j*100.f+25));
+			(*window).draw(text);
+		}
+	}
+}
+
+
+
 
 int main() {
 	Plateau init = plateauInitial();
-	RenderWindow window(VideoMode(1000, 1000), "jeu2048");
+	init[1][1] = 2048;
+	RenderWindow window(VideoMode(390, 390), "jeu2048");
 	Grid grid = init_grid();
 	set_positions(&grid);
 	window.clear(Color::Black);
@@ -66,6 +91,7 @@ int main() {
 				window.close();
 			}
 		draw_grid(&window,&grid);
+		draw_text(&window,&init);
 		}
 		window.display();
 	}
