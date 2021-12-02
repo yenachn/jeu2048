@@ -35,18 +35,13 @@ void set_positions(Grid *grid){
 void set_color(Grid *grid,Plateau plateau){
 	for (int i = 0; i <= 3; i++){
 		for (int j = 0; j <= 3; j++){
-			(*grid)[i][j].setFillColor(Color(max(int(log2(plateau[i][j])*64),255),0,0));
+			int level = max(int(255 - log2(plateau[i][j]+1)*21),0);
+			(*grid)[i][j].setFillColor(Color(255,level,level));
 		}
 	}
 }
 
-void merge_swap(Grid *grid, Plateau plateau){
-	for (int i = 0; i <= 3; i++){
-		for (int j = 0; j <= 3; i++){
 
-		}
-	}
-}
 
 void draw_grid(RenderWindow *window ,Grid *grid){
 	for (int i = 0; i <= 3; i++){
@@ -56,9 +51,6 @@ void draw_grid(RenderWindow *window ,Grid *grid){
 	}
 }
 
-void set_score(int score, Plateau plateau){
-
-}
 
 int main() {
 	Plateau init = plateauInitial();
