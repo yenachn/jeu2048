@@ -28,6 +28,14 @@ void set_color(Grid *grid,Plateau plateau){
 	}
 }
 
+void draw_grid(RenderWindow *window ,Grid *grid){
+	for (int i = 0; i < 3; i++){
+		for (int j = 0; j < 3; i++){
+			(*window).draw((*grid)[i][j]);
+		}
+	}
+}
+
 int main() {
 	Plateau init = plateauInitial();
 	RenderWindow window(VideoMode(1000, 1000), "jeu2048");
@@ -41,9 +49,7 @@ int main() {
 			if (event.type == Event::Closed){
 				window.close();
 			}
-		RectangleShape grid(Vector2f(500.f, 500.f));
-		grid.setFillColor(Color(255,255,255));
-		window.draw(grid);
+		draw_grid(&window,&grid);
 		}
 		window.display();
 	}
