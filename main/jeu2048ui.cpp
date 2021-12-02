@@ -9,10 +9,23 @@ using namespace sf;
 using namespace std;
 
 typedef vector<vector<RectangleShape>> Grid;
+typedef vector<RectangleShape> Row;
+
+Grid init_grid(){
+	Grid grid;
+	grid = Grid(4);
+	for (int i = 0; i <= 3; i++){
+		for (int j = 0; j <= 3; j++){
+			RectangleShape rectangle(Vector2f(290.f,290.f));
+			grid[i].push_back(rectangle);		
+		}	
+	}
+	return grid;
+}
 
 void set_positions(Grid *grid){
-	for (int i = 0; i < 3; i++){
-		for (int j = 0; j < 3; i++)
+	for (int i = 0; i <= 3; i++){
+		for (int j = 0; j <= 3; i++)
 		{
 			(*grid)[i][j].setPosition(Vector2f(i*300.f, j*300.f));
 		}
@@ -20,17 +33,16 @@ void set_positions(Grid *grid){
 }
 
 void set_color(Grid *grid,Plateau plateau){
-	for (int i = 0; i < 3; i++){
-		for (int j = 0; j < 3; i++)
-		{
+	for (int i = 0; i <= 3; i++){
+		for (int j = 0; j <= 3; i++){
 			(*grid)[i][j].setFillColor(Color(max(int(log2(plateau[i][j])*64),255),0,0));
 		}
 	}
 }
 
 void draw_grid(RenderWindow *window ,Grid *grid){
-	for (int i = 0; i < 3; i++){
-		for (int j = 0; j < 3; i++){
+	for (int i = 0; i <= 3; i++){
+		for (int j = 0; j <= 3; i++){
 			(*window).draw((*grid)[i][j]);
 		}
 	}
