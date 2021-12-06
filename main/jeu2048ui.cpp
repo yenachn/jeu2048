@@ -99,7 +99,6 @@ int main(){
 	startagain:
 	srand(time(NULL));
 	Plateau init = plateauInitial();
-	init[1][2] = 2048;
 	Plateau old = plateauVide();
 	int c;
 	bool cont = false;
