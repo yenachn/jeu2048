@@ -77,7 +77,7 @@ int main(){
 	RenderWindow window(VideoMode(390,390), "jeu2048");
 	Grid grid = init_grid();
 	set_positions(&grid);
-	window_clear(Color::Black);
+	window.clear(Color::Black);
 	startagain:
 	srand(time(NULL));
 	Plateau init = plateauInitial();
