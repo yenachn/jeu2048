@@ -13,11 +13,11 @@ using namespace std;
 typedef vector<vector<RectangleShape>> Grid;
 typedef vector<vector<Text>> TextGrid;
 
-Grid init_grid(){
+Grid init_grid(int s){
 	Grid grid;
-	grid = Grid(4);
-	for (int i = 0; i <= 3; i++){
-		for (int j = 0; j <= 3; j++){
+	grid = Grid(s);
+	for (int i = 0; i < s; i++){
+		for (int j = 0; j < s; j++){
 			RectangleShape rectangle(Vector2f(90.f,90.f));
 			grid[i].push_back(rectangle);		
 		}	
@@ -25,18 +25,18 @@ Grid init_grid(){
 	return grid;
 }
 
-void set_positions(Grid *grid){
-	for (int i = 0; i <= 3; i++){
-		for (int j = 0; j <= 3; j++)
+void set_positions(Grid *grid,int s){
+	for (int i = 0; i < s; i++){
+		for (int j = 0; j < s; j++)
 		{
 			(*grid)[i][j].setPosition(Vector2f(i*100.f,35+j*100.f));
 		}
 	}
 }
 
-void set_color(Grid *grid,Plateau *plateau){
-	for (int i = 0; i <= 3; i++){
-		for (int j = 0; j <= 3; j++){
+void set_color(Grid *grid,Plateau *plateau,int s){
+	for (int i = 0; i < s; i++){
+		for (int j = 0; j < s; j++){
 			int level = max(int(255 - log2((*plateau)[i][j]+1)*21),0);
 			(*grid)[j][i].setFillColor(Color(255,level,level));
 		}
@@ -45,30 +45,36 @@ void set_color(Grid *grid,Plateau *plateau){
 
 
 
-void draw_grid(RenderWindow *window ,Grid *grid){
-	for (int i = 0; i <= 3; i++){
-		for (int j = 0; j <= 3; j++){
+void draw_grid(RenderWindow *window ,Grid *grid,int s){
+	for (int i = 0; i < s; i++){
+		for (int j = 0; j < s; j++){
 			(*window).draw((*grid)[i][j]);
 		}
 	}
 }
 
-void draw_text(RenderWindow *window,Plateau *plateau){
+void draw_text(RenderWindow *window,Plateau *plateau,int s){
 	Text text;
 	Font font;
 	font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeSans.ttf");
 
-	string str = "score : " + to_string(score(plateau));
+	string str = "score : " + to_string(score(plateau,s));
 	text.setFont(font);
 	text.setFillColor(Color::White);
 	text.setCharacterSize(30);
 	text.setString(str);
 	text.setPosition(Vector2f(0,-2.5));
 	(*window).draw(text);
-	for(int i = 0; i <= 3;i++){
-		for(int j = 0;j <=3; j++){
+	for(int i = 0; i < s;i++){
+		for(int j = 0;j < s; j++){
 			Text text;
-			string str = to_string((*plateau)[i][j]);
+			string str;
+			
+			int val = (*plateau)[i][j];
+			if(val==0){
+				str = " ";
+			} else{str = to_string(val);}
+		
 			int c = str.length();
 			text.setFont(font);
 			text.setFillColor(Color::Black);
@@ -80,29 +86,32 @@ void draw_text(RenderWindow *window,Plateau *plateau){
 	}
 }
 
-void draw_update(RenderWindow *window, Grid *grid, Plateau *plateau){
+void draw_update(RenderWindow *window, Grid *grid, Plateau *plateau,int s){
 		window->clear(Color::Black);
-		set_color(grid, plateau);
-		draw_grid(window, grid);
-		draw_text(window, plateau);
+		set_color(grid, plateau,s);
+		draw_grid(window, grid,s);
+		draw_text(window, plateau,s);
 		window->display();
 }
 
 
 int main(){
+	int s;
+  	cout << "taille du plateau :";
+  	cin >> s;
 
-	RenderWindow window(VideoMode(390,425), "jeu2048");
-	Grid grid = init_grid();
-	set_positions(&grid);
+	RenderWindow window(VideoMode(100*s-10,100*s+25), "jeu2048");
+	Grid grid = init_grid(s);
+	set_positions(&grid,s);
 	window.clear(Color::Black);
 
 	startagain:
 	srand(time(NULL));
-	Plateau init = plateauInitial();
-	Plateau old = plateauVide();
+	Plateau init = plateauInitial(s);
+	Plateau old = plateauVide(s);
 	int c;
 	bool cont = false;
-	draw_update(&window,&grid,&init);
+	draw_update(&window,&grid,&init,s);
 	initscr();
 	keypad(stdscr, true);
 
@@ -111,21 +120,21 @@ int main(){
 		c = getch();
 		if(c!=255)clear();
 		old = init;
-		deplacement(&init, c);
+		deplacement(&init, c,s);
 		if(old!=init){
-			rgen(&init);
+			rgen(&init,s);
 		} 
-		printw(dessine(&init).c_str());
+		printw(dessine(&init,s).c_str());
 		Event event;
 		while (window.pollEvent(event)){
 			if (event.type == Event::Closed){
 				window.close();
 			}
 		}
-		draw_update(&window,&grid,&init);
-	} while (window.isOpen() && c!=113 && (cont || !estGagnant(&init)) && !estTermine(&init));
+		draw_update(&window,&grid,&init,s);
+	} while (window.isOpen() && c!=113 && (cont || !estGagnant(&init,s)) && !estTermine(&init,s));
 
-	if (estGagnant(&init)){
+	if (estGagnant(&init,s)){
 		window.clear(Color::Black);
 		Text text;
 		Font font;
@@ -155,7 +164,7 @@ int main(){
 			}
 		}
 
-		if (estTermine(&init)){
+		if (estTermine(&init,s)){
 
 			window.clear(Color::Black);
 			Text text;
