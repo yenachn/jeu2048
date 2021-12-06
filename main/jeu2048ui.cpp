@@ -94,7 +94,7 @@ int main(){
 	deplacement(&init, c);
 	if(old!=init){
 		rgen(&init);
-	} while (c!=113 && (cont || !estGagnant(&init) && !estTermine(&init)));
+	} } while (c!=113 && (cont || !estGagnant(&init) && !estTermine(&init)));
 	if (estGagnant(&init)){
 	
 	c = getch();
