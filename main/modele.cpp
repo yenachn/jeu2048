@@ -58,10 +58,8 @@ vector<tuple<int, int>> coordGen(int s){
  **/
 void rgen(Plateau *plateau){
   int s = size(*plateau);
-  cout << "size" << s << endl;
   vector<tuple<int, int>> coord = coordGen(s);
   int n = coord.size();
-  cout << n << endl;
   for(int i = 0; i<n-1; i++){
     int j = i + (rand()%(n-i));
     const tuple<int,int> temp = coord[i];
