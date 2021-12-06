@@ -69,7 +69,7 @@ void draw_text(RenderWindow *window,Plateau *plateau,int s){
 		for(int j = 0;j < s; j++){
 			Text text;
 			string str;
-			
+
 			int val = (*plateau)[i][j];
 			if(val==0){
 				str = " ";
@@ -124,7 +124,6 @@ int main(){
 		if(old!=init){
 			rgen(&init,s);
 		} 
-		printw(dessine(&init,s).c_str());
 		Event event;
 		while (window.pollEvent(event)){
 			if (event.type == Event::Closed){

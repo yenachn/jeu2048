@@ -41,7 +41,7 @@ int tireDeuxOuQuatre(){
 
 vector<tuple<int, int>> coordGen(int s){
 
-  vector<tuple<int, int>> coord = vector<tuple<int, int>>(s*s);
+  vector<tuple<int, int>> coord;
   for(int i=0; i<s; i++){
     for(int j=0; j<s; j++){
       coord.push_back({i,j});
@@ -56,9 +56,12 @@ vector<tuple<int, int>> coordGen(int s){
  *  @param plateau un Plateau
  *  @return un nouveau plateau res, correspondant à plateau dans lequel a été ajouté un 2 ou un 4 dans l'une des cases vides.
  **/
-void rgen(Plateau *plateau, int s){
+void rgen(Plateau *plateau){
+  int s = size(*plateau);
+  cout << "size" << s << endl;
   vector<tuple<int, int>> coord = coordGen(s);
   int n = coord.size();
+  cout << n << endl;
   for(int i = 0; i<n-1; i++){
     int j = i + (rand()%(n-i));
     const tuple<int,int> temp = coord[i];
@@ -83,8 +86,8 @@ void rgen(Plateau *plateau, int s){
  **/
 Plateau plateauInitial(int s){
   Plateau init = plateauVide(s);
-  rgen(&init,s);
-  rgen(&init,s);
+  rgen(&init);
+  rgen(&init);
   return init;
 }
 
@@ -92,11 +95,11 @@ Plateau plateauInitial(int s){
 /** déplace les tuiles d'un Plateau vers la gauche et les combine si possible
  *  @param plateau le Plateau
  *  @return le Plateau une fois déplacé vers la gauche
- **/
-void deplacementGauche(Plateau *plateau, int s){
-  for(int k = 0; k<=(s-1);k++){
-    for (int i = 0; i <= (s-1); i++){
-      for (int j = (s-2); j >= 0; j--){
+ **/void deplacementGauche(Plateau *plateau){
+   int s = size(*plateau);
+  for(int k = 0; k<=s-2;k++){
+    for (int i = 0; i <= s-1; i++){
+      for (int j = s-2; j >= 0; j--){
         if ((*plateau)[i][j] == 0){
           (*plateau)[i][j] = (*plateau)[i][j+1];
           (*plateau)[i][j+1] = 0;
@@ -104,17 +107,17 @@ void deplacementGauche(Plateau *plateau, int s){
       }
     }
   } 
-  for (int i = 0; i <= (s-1); i++){
-    for (int j = 0; j <= (s-2); j++){
+  for (int i = 0; i <= s-1; i++){
+    for (int j = 0; j <= s-2; j++){
       if ((*plateau)[i][j] != 0 && (*plateau)[i][j] == (*plateau)[i][j+1]){
         (*plateau)[i][j] = 2*(*plateau)[i][j];
         (*plateau)[i][j+1] = 0;
       }
     } 
   }
-  for(int k = 0; k<=(s-1);k++){
-    for (int i = 0; i <= (s-1); i++){
-      for (int j = (s-2); j >= 0; j--){
+  for(int k = 0; k<=s-2;k++){
+    for (int i = 0; i <= s-1; i++){
+      for (int j = s-2; j >= 0; j--){
         if ((*plateau)[i][j] == 0){
           (*plateau)[i][j] = (*plateau)[i][j+1];
           (*plateau)[i][j+1] = 0;
@@ -130,10 +133,11 @@ void deplacementGauche(Plateau *plateau, int s){
  *  @param plateau le Plateau
  *  @return le Plateau une fois déplacé vers la droite
  **/
-void deplacementDroite(Plateau *plateau, int s){
-  for(int k = 0; k<=2;k++){
-    for (int i = 0; i <= 3; i++){
-      for (int j = 1; j <= 3; j++){
+void deplacementDroite(Plateau *plateau){
+  int s = size(*plateau);
+  for(int k = 0; k<=s-2;k++){
+    for (int i = 0; i <= s-1; i++){
+      for (int j = 1; j <= s-1; j++){
         if ((*plateau)[i][j] == 0){
           (*plateau)[i][j] = (*plateau)[i][j-1];
           (*plateau)[i][j-1] = 0;
@@ -141,17 +145,17 @@ void deplacementDroite(Plateau *plateau, int s){
       }
     }
   } 
-  for (int i = 0; i <= 3; i++){
-    for (int j = 3; j >= 1; j--){
+  for (int i = 0; i <= s-1; i++){
+    for (int j = s-1; j >= 1; j--){
       if ((*plateau)[i][j] != 0 && (*plateau)[i][j] == (*plateau)[i][j-1]){
         (*plateau)[i][j] = 2*(*plateau)[i][j];
         (*plateau)[i][j-1] = 0;
       }
     } 
   }
-  for(int k = 0; k<=2;k++){
-    for (int i = 0; i <= 3; i++){
-      for (int j = 1; j <= 3; j++){
+  for(int k = 0; k<=s-2;k++){
+    for (int i = 0; i <= s-1; i++){
+      for (int j = 1; j <= s-1; j++){
         if ((*plateau)[i][j] == 0){
           (*plateau)[i][j] = (*plateau)[i][j-1];
           (*plateau)[i][j-1] = 0;
@@ -165,10 +169,11 @@ void deplacementDroite(Plateau *plateau, int s){
  *  @param plateau le Plateau
  *  @return le Plateau une fois déplacé vers le haut
  **/
-void deplacementHaut(Plateau *plateau, int s){
-  for(int k = 0; k<=(s-1); k++) {
-    for (int i = 0; i <= (s-2); i++){
-      for (int j = 0; j <= (s-1); j++){
+void deplacementHaut(Plateau *plateau){
+  int s = size(*plateau);
+  for(int k = 0; k<=s-2; k++) {
+    for (int i = 0; i <= s-2; i++){
+      for (int j = 0; j <= s-1; j++){
         if ((*plateau)[i][j] == 0){
           (*plateau)[i][j] = (*plateau)[i+1][j];
           (*plateau)[i+1][j] = 0;
@@ -176,17 +181,17 @@ void deplacementHaut(Plateau *plateau, int s){
       }
     }
   }
-  for (int i = 0; i <= (s-2); i++){
-    for (int j = 0; j <= (s-1); j++){
+  for (int i = 0; i <= s-2; i++){
+    for (int j = 0; j <= s-1; j++){
       if ((*plateau)[i][j] != 0 && (*plateau)[i][j] == (*plateau)[i+1][j]){
         (*plateau)[i][j] = 2*(*plateau)[i][j];
         (*plateau)[i+1][j] = 0;
       }
     } 
   }
-  for(int k = 0; k<=(s-1); k++) {
-    for (int i = 0; i <= (s-2); i++){
-      for (int j = 0; j <= (s-1); j++){
+  for(int k = 0; k<=s-2; k++) {
+    for (int i = 0; i <= s-2; i++){
+      for (int j = 0; j <= s-1; j++){
         if ((*plateau)[i][j] == 0){
           (*plateau)[i][j] = (*plateau)[i+1][j];
           (*plateau)[i+1][j] = 0;
@@ -202,10 +207,11 @@ void deplacementHaut(Plateau *plateau, int s){
  *  @param plateau le Plateau
  *  @return le Plateau une fois déplacé vers le bas
  **/
-void deplacementBas(Plateau *plateau, int s){
-  for(int k = 0; k<=(s-1); k++) {
-    for (int i = (s-1); i >= 1; i--){
-      for (int j = 0; j <= (s-1); j++){
+void deplacementBas(Plateau *plateau){
+  int s = size(*plateau);
+  for(int k = 0; k<=s-2; k++) {
+    for (int i = s-1; i >= 1; i--){
+      for (int j = 0; j <= s-1; j++){
         if ((*plateau)[i][j] == 0){
           (*plateau)[i][j] = (*plateau)[i-1][j];
           (*plateau)[i-1][j] = 0;
@@ -213,17 +219,17 @@ void deplacementBas(Plateau *plateau, int s){
       }
     }
   }
-  for (int i = (s-1); i >= 1; i--){
-    for (int j = 0; j <= (s-1); j++){
+  for (int i = s-1; i >= 1; i--){
+    for (int j = 0; j <= s-1; j++){
       if ((*plateau)[i][j] != 0 && (*plateau)[i][j] == (*plateau)[i-1][j]){
         (*plateau)[i][j] = 2*(*plateau)[i][j];
         (*plateau)[i-1][j] = 0;
       }
     } 
   }
-  for(int k = 0; k<=(s-1); k++) {
-    for (int i = (s-1); i >= 1; i--){
-      for (int j = 0; j <= (s-1); j++){
+  for(int k = 0; k<=s-2; k++) {
+    for (int i = s-1; i >= 1; i--){
+      for (int j = 0; j <= s-1; j++){
         if ((*plateau)[i][j] == 0){
           (*plateau)[i][j] = (*plateau)[i-1][j];
           (*plateau)[i-1][j] = 0;
@@ -232,6 +238,7 @@ void deplacementBas(Plateau *plateau, int s){
     }
   }
 };
+
 
 
 /* keycodes associés aux touches utilisées*/
@@ -250,23 +257,23 @@ const int q = 113;
  *  @param direction la direction
  *  @return le Plateau déplacé dans la direction
  **/
-void deplacement(Plateau *plateau, int direction,int s){
+void deplacement(Plateau *plateau, int direction){
   switch ( direction ) {
     case GAUCHE:
       printw("last played: LEFT");
-      deplacementGauche(plateau,s);
+      deplacementGauche(plateau);
       break;
     case DROITE:
       printw("last played: RIGHT");
-      deplacementDroite(plateau,s);
+      deplacementDroite(plateau);
       break;
     case HAUT:
       printw("last played: UP");
-      deplacementHaut(plateau,s);
+      deplacementHaut(plateau);
       break;
     case BAS:
       printw("last played: DOWN");
-      deplacementBas(plateau,s);
+      deplacementBas(plateau);
       break;
     default:
       printw("i can only read arrow-key inputs, sorry !");
@@ -291,7 +298,8 @@ string empty(int i){
  **/
 
 /* int k ~ int s in the previous functions */
-string dessine(Plateau *plateau, int k){
+string dessine(Plateau *plateau){
+  int k = size(*plateau);
   string fulline = "\n";
   char s = '*';
   int n = 0;
@@ -329,7 +337,8 @@ string dessine(Plateau *plateau, int k){
  *  @param plateau un Plateau
  *  @return true si le plateau est vide, false sinon
  **/
-bool estTermine(Plateau *plateau, int s){
+bool estTermine(Plateau *plateau){
+  int s = size(*plateau);
   for (int i = 0; i <= (s-2); i++){
     for(int j = 0; j <= (s-2); j++){
       if ((*plateau)[i][j] == (*plateau)[i][j+1] || (*plateau)[i][j] == (*plateau)[i+1][j]){
@@ -350,7 +359,8 @@ bool estTermine(Plateau *plateau, int s){
  * @param plateau un Plateau
  * @return true si le plateau contient un 2048, false sinon
  **/
-bool estGagnant(Plateau *plateau, int s){
+bool estGagnant(Plateau *plateau){
+  int s = size(*plateau);
   for (int i = 0; i<=(s-1); i++){
     for (int j = 0; j <= (s-1); j++){
       if ((*plateau)[i][j] == 2048){
@@ -369,7 +379,8 @@ bool estGagnant(Plateau *plateau, int s){
  * @param plateau un Plateau
  * @return un entier correspondant au score associé au plateau 
  **/
-int score(Plateau *plateau, int s){
+int score(Plateau *plateau){
+  int s = size(*plateau);
   int res = 0;
   for(int i=0;i<s;i++){
     for (int j = 0; j<s; j++)
