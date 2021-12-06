@@ -13,7 +13,6 @@ using namespace std;
 typedef vector<vector<RectangleShape>> Grid;
 typedef vector<vector<Text>> TextGrid;
 
-
 Grid init_grid(){
 	Grid grid;
 	grid = Grid(4);
@@ -30,7 +29,7 @@ void set_positions(Grid *grid){
 	for (int i = 0; i <= 3; i++){
 		for (int j = 0; j <= 3; j++)
 		{
-			(*grid)[i][j].setPosition(Vector2f(i*100.f, j*100.f));
+			(*grid)[i][j].setPosition(Vector2f(80+i*100.f, 120+j*100.f));
 		}
 	}
 }
@@ -67,35 +66,78 @@ void draw_text(RenderWindow *window,Plateau *plateau){
 			text.setFillColor(Color::Black);
 			text.setCharacterSize(30);
 			text.setString(str);
-			text.setPosition(Vector2f(i*100.f+(90-15*c)/2, j*100.f+25));
+			text.setPosition(Vector2f(80+i*100.f+(90-15*c)/2, 120+j*100.f+25));
 			(*window).draw(text);
 		}
 	}
 }
 
+int main(){
 
-
-
-int main() {
-	Plateau init = plateauInitial();
-	init[1][1] = 2048;
-	RenderWindow window(VideoMode(390, 390), "jeu2048");
+	RenderWindow window(VideoMode(390,390), "jeu2048");
 	Grid grid = init_grid();
 	set_positions(&grid);
-	window.clear(Color::Black);
+	window_clear(Color::Black);
+	startagain:
+	srand(time(NULL));
+	Plateau init = plateauInitial();
+	Plateau old = plateauVide();
+	int c;
+	bool cont = false;
+	initscr();
+	keypad(stdscr, true);
+	loop:
+	do {
+	c = getch();
+	if(c!=255)clear();
+	old = init;
+	deplacement(&init, c);
+	if(old!=init){
+		rgen(&init);
+	} while (c!=113 && (cont || !estGagnant(&init) && !estTermine(&init)));
+	if (estGagnant(&init)){
+	
+	c = getch();
+	switch(c){
+	
+	case r:
+		clear();
+		goto startagain;
+	case q:
+		goto end;
+	default:
+		clear();
+		cont = true;
+		goto loop;
+	
+		}
+	
+	}
+	if (estTermine(&init)){
+	
+	c = getch();
+	if(c==r) goto startagain;
+	else goto end;
+	
+	}
+	
+	end:
+	endwin();
+
 	while (window.isOpen()){
-		set_color(&grid,init);
+		set_color(&grid, init);
 		Event event;
 		while (window.pollEvent(event)){
 			if (event.type == Event::Closed){
 				window.close();
 			}
-		draw_grid(&window,&grid);
-		draw_text(&window,&init);
+		draw_grid(&window, &grid);
+		draw_text(&window, &init);
 		}
 		window.display();
 	}
-	return 0;
+
 }
 
-
+return 0;
+	}
