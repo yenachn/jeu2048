@@ -25,7 +25,8 @@ Grid init_grid(int s){
 	return grid;
 }
 
-void set_positions(Grid *grid,int s){
+void set_positions(Grid *grid){
+	int s = size(*grid);
 	for (int i = 0; i < s; i++){
 		for (int j = 0; j < s; j++)
 		{
@@ -34,7 +35,8 @@ void set_positions(Grid *grid,int s){
 	}
 }
 
-void set_color(Grid *grid,Plateau *plateau,int s){
+void set_color(Grid *grid,Plateau *plateau){
+	int s = size(*plateau);
 	for (int i = 0; i < s; i++){
 		for (int j = 0; j < s; j++){
 			int level = max(int(255 - log2((*plateau)[i][j]+1)*21),0);
@@ -45,7 +47,8 @@ void set_color(Grid *grid,Plateau *plateau,int s){
 
 
 
-void draw_grid(RenderWindow *window ,Grid *grid,int s){
+void draw_grid(RenderWindow *window ,Grid *grid){
+	int s = size(*grid);
 	for (int i = 0; i < s; i++){
 		for (int j = 0; j < s; j++){
 			(*window).draw((*grid)[i][j]);
@@ -53,12 +56,13 @@ void draw_grid(RenderWindow *window ,Grid *grid,int s){
 	}
 }
 
-void draw_text(RenderWindow *window,Plateau *plateau,int s){
+void draw_text(RenderWindow *window,Plateau *plateau){
+	int s = size(*plateau);
 	Text text;
 	Font font;
 	font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeSans.ttf");
 
-	string str = "score : " + to_string(score(plateau,s));
+	string str = "score : " + to_string(score(plateau));
 	text.setFont(font);
 	text.setFillColor(Color::White);
 	text.setCharacterSize(30);
@@ -86,11 +90,11 @@ void draw_text(RenderWindow *window,Plateau *plateau,int s){
 	}
 }
 
-void draw_update(RenderWindow *window, Grid *grid, Plateau *plateau,int s){
+void draw_update(RenderWindow *window, Grid *grid, Plateau *plateau){
 		window->clear(Color::Black);
-		set_color(grid, plateau,s);
-		draw_grid(window, grid,s);
-		draw_text(window, plateau,s);
+		set_color(grid, plateau);
+		draw_grid(window, grid);
+		draw_text(window, plateau);
 		window->display();
 }
 
@@ -102,7 +106,7 @@ int main(){
 
 	RenderWindow window(VideoMode(100*s-10,100*s+25), "jeu2048");
 	Grid grid = init_grid(s);
-	set_positions(&grid,s);
+	set_positions(&grid);
 	window.clear(Color::Black);
 
 	startagain:
@@ -111,7 +115,7 @@ int main(){
 	Plateau old = plateauVide(s);
 	int c;
 	bool cont = false;
-	draw_update(&window,&grid,&init,s);
+	draw_update(&window,&grid,&init);
 	initscr();
 	keypad(stdscr, true);
 
@@ -120,9 +124,9 @@ int main(){
 		c = getch();
 		if(c!=255)clear();
 		old = init;
-		deplacement(&init, c,s);
+		deplacement(&init, c);
 		if(old!=init){
-			rgen(&init,s);
+			rgen(&init);
 		} 
 		Event event;
 		while (window.pollEvent(event)){
@@ -130,10 +134,10 @@ int main(){
 				window.close();
 			}
 		}
-		draw_update(&window,&grid,&init,s);
-	} while (window.isOpen() && c!=113 && (cont || !estGagnant(&init,s)) && !estTermine(&init,s));
+		draw_update(&window,&grid,&init);
+	} while (window.isOpen() && c!=113 && (cont || !estGagnant(&init)) && !estTermine(&init));
 
-	if (estGagnant(&init,s)){
+	if (estGagnant(&init)){
 		window.clear(Color::Black);
 		Text text;
 		Font font;
@@ -163,7 +167,7 @@ int main(){
 			}
 		}
 
-		if (estTermine(&init,s)){
+		if (estTermine(&init)){
 
 			window.clear(Color::Black);
 			Text text;
