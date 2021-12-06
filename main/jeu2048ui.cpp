@@ -93,27 +93,22 @@ int main(){
 
 	RenderWindow window(VideoMode(390,425), "jeu2048");
 	Grid grid = init_grid();
-	printf("grid initialised \n");
 	set_positions(&grid);
-	printf("positions initialised \n");
 	window.clear(Color::Black);
-	printf("window cleared \n");
 
 	startagain:
 	srand(time(NULL));
-	printf("random initialised \n");
 	Plateau init = plateauInitial();
+	init[1][2] = 2048;
 	Plateau old = plateauVide();
 	int c;
 	bool cont = false;
+	draw_update(&window,&grid,&init);
 	initscr();
 	keypad(stdscr, true);
-	draw_update(&window,&grid,&init);
 
 	loop:
-	printf("reached loop \n");
 	do  {
-		printw("went through loop !\n");
 		c = getch();
 		if(c!=255)clear();
 		old = init;
@@ -130,27 +125,58 @@ int main(){
 		}
 		draw_update(&window,&grid,&init);
 	} while (window.isOpen() && c!=113 && (cont || !estGagnant(&init)) && !estTermine(&init));
+
 	if (estGagnant(&init)){
-	
-	c = getch();
-	switch(c){
-	
-	case r:
-		clear();
-		goto startagain;
-	case q:
-		goto end;
-	default:
-		clear();
-		cont = true;
-		goto loop;
-		}
-	}
-	if (estTermine(&init)){
+		window.clear(Color::Black);
+		Text text;
+		Font font;
+		font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeSans.ttf");
+
+		string str = "Vous avez gagne, BRAVO ! \nPour recommencer une partie, \nappuyez sur r,\nPour quitter, appyez sur q.\nSi vous souhaitez continuer votre partie \nactuelle, cliquez sur n \'importe quelle autre \ntouche";
+		text.setFont(font);
+		text.setFillColor(Color::White);
+		text.setCharacterSize(20);
+		text.setString(str);
+		text.setPosition(Vector2f(0,130));
+		window.draw(text);
+		window.display();
+
 		c = getch();
-		if(c==r) goto startagain;
-		else goto end;
-	}
+		switch(c){
+			
+		case r:
+			clear();
+			goto startagain;
+		case q:
+			goto end;
+		default:
+			clear();
+			cont = true;
+			goto loop;
+			}
+		}
+
+		if (estTermine(&init)){
+
+			window.clear(Color::Black);
+			Text text;
+				Font font;
+			font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeSans.ttf");
+
+			string str = "Partie terminee ! _\nPour recommencer, pressez r\nSinon, pressez n'importe quelle \nautre touche";
+			text.setFont(font);
+			text.setFillColor(Color::White);
+			text.setCharacterSize(20);
+			text.setString(str);
+			text.setPosition(Vector2f(0,130));
+			window.draw(text);
+			window.display();
+
+			c = getch();
+			if(c==r) goto startagain;
+			else goto end;
+		}
+	
 	end:
 	endwin();
 	return 0;
