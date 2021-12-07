@@ -4,13 +4,13 @@ Chang Yena MI1  yena.chang@universite-paris-saclay.fr
 
 ## Résumé du travail effectué :
 ###### Niveau 0:
-(0.1) (0.2) (0.3) (0.4) (0.5) (0.6) (0.7) (0.8)
+(0.1), (0.2), (0.3), (0.4), (0.5), (0.6), (0.7), (0.8)
 ###### Niveau 1:
-(1.2) (1.3) (1.4)
+(1.2), (1.3), (1.4)
 ###### Niveau 2:
-(2.2)
+(2.1) treated but non functional, (2.2)
 ###### Niveau 3:
-(3.2) (3.3)
+(3.2), (3.3)
 
 ## Demonstration:
 **function for random generation.**\
