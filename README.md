@@ -15,7 +15,7 @@ Chang Yena MI1  yena.chang@universite-paris-saclay.fr
 ## Demonstration:
 **function for random generation.**\
 a naive approach to the random generation would be to use the `rand();` function for both i, j coordinates of the matrice and check if the value contained is 0. however, there is a possiblity that we will fall on the same (i,j) for an indefinite time consecutively (however low the chances due to the uniform distribution).
-to eliminate this possiblity, the function `rgen();` produces a random permutation of the set of all coordinates in our playing matrice (this is completed in linear time thanks to the Fisher-Yates algorithm) and goes through the set with a for loop until it finds a coordinate containing the value 0. then, with our `tireDeuxouQuatre()` function, a 2 or 4 is generated (with 0.9 and 0.1 probability respectively) and placed in the coordinate.
+to eliminate this possiblity, the function `rgen();` produces a random permutation of the set of all coordinates in our playing matrice - this is completed in linear time thanks to the Fisher-Yates algorithm (while experimenting we also experimented with sattolo's algorithm, which returns cyclic permutations in linear time but decided against using it as it isn't complete) and goes through the set with a for loop until it finds a coordinate containing the value 0. then, with our `tireDeuxouQuatre()` function, a 2 or 4 is generated (with 0.9 and 0.1 probability respectively) and placed in the coordinate.
 ```c++
 void rgen(Plateau *plateau){
   int s = size(*plateau);
