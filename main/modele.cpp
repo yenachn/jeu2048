@@ -339,14 +339,24 @@ bool estTermine(Plateau *plateau){
   int s = size(*plateau);
   for (int i = 0; i <= (s-2); i++){
     for(int j = 0; j <= (s-2); j++){
-      if ((*plateau)[i][j] == (*plateau)[i][j+1] || (*plateau)[i][j] == (*plateau)[i+1][j]){
+      if ((*plateau)[i][j] == (*plateau)[i][j+1] || (*plateau)[i][j] == (*plateau)[i+1][j] || (*plateau)[s-1][s-1] == (*plateau)[s-2][s-1] || (*plateau)[s-1][s-1] == (*plateau)[s-1][s-2]){
         return false;
       }
     }
     for(int j = 0; j <= (s-1); j++){
-      if ((*plateau)[i][j] == 0){
+      if ((*plateau)[i][j] == 0 || (*plateau)[s-1][s-1] == 0){
         return false;
       }
+    }
+  }
+  for(int i = 0; i<=(s-2); i++){
+    if((*plateau)[i][s-1] == (*plateau)[i+1][s-1]){
+      return false;
+    }
+  }
+    for(int i = 0; i<=(s-2); i++){
+    if((*plateau)[s-1][i] == (*plateau)[s-1][i+1]){
+      return false;
     }
   }
   return true;
