@@ -30,7 +30,7 @@ void set_positions(Grid *grid){
 	for (int i = 0; i < s; i++){
 		for (int j = 0; j < s; j++)
 		{
-			(*grid)[i][j].setPosition(Vector2f(i*100.f,35+j*100.f));
+			(*grid)[i][j].setPosition(Vector2f(20+i*100.f,100+j*100.f));
 		}
 	}
 }
@@ -60,15 +60,22 @@ void draw_text(RenderWindow *window,Plateau *plateau){
 	int s = size(*plateau);
 	Text text;
 	Font font;
-	font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeSans.ttf");
-
+	font.loadFromFile("game_over.ttf");
 	string str = "score : " + to_string(score(plateau));
 	text.setFont(font);
 	text.setFillColor(Color::White);
-	text.setCharacterSize(30);
+	text.setCharacterSize(70);
 	text.setString(str);
-	text.setPosition(Vector2f(0,-2.5));
+	text.setPosition(Vector2f(10,20));
+	Text logo;
+	string lgo = "jeu2048: "+to_string(s)+" by "+to_string(s);
+	logo.setFont(font);
+	logo.setFillColor(Color::White);
+	logo.setCharacterSize(110);
+	logo.setString(lgo);
+	logo.setPosition(Vector2f(10,-50));
 	(*window).draw(text);
+	(*window).draw(logo);
 	for(int i = 0; i < s;i++){
 		for(int j = 0;j < s; j++){
 			Text text;
@@ -82,9 +89,9 @@ void draw_text(RenderWindow *window,Plateau *plateau){
 			int c = str.length();
 			text.setFont(font);
 			text.setFillColor(Color::Black);
-			text.setCharacterSize(30);
+			text.setCharacterSize(90);
 			text.setString(str);
-			text.setPosition(Vector2f(j*100.f+(90-15*c)/2,35+i*100.f+25));
+			text.setPosition(Vector2f(15+j*100.f+(90-15*c)/2,45+i*100.f+25));
 			(*window).draw(text);
 		}
 	}
@@ -104,7 +111,7 @@ int main(){
   	cout << "taille du plateau :";
   	cin >> s;
 
-	RenderWindow window(VideoMode(100*s-10,100*s+25), "jeu2048");
+	RenderWindow window(VideoMode(100*s+28,100*s+105), "jeu2048");
 	Grid grid = init_grid(s);
 	set_positions(&grid);
 	window.clear(Color::Black);
@@ -141,7 +148,7 @@ int main(){
 		window.clear(Color::Black);
 		Text text;
 		Font font;
-		font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeSans.ttf");
+		font.loadFromFile("game_over.ttf");
 
 		string str = "Vous avez gagne, BRAVO ! \nPour recommencer une partie, \nappuyez sur r,\nPour quitter, appyez sur q.\nSi vous souhaitez continuer votre partie \nactuelle, cliquez sur n \'importe quelle autre \ntouche";
 		text.setFont(font);
@@ -172,7 +179,7 @@ int main(){
 			window.clear(Color::Black);
 			Text text;
 				Font font;
-			font.loadFromFile("/usr/share/fonts/truetype/freefont/FreeSans.ttf");
+			font.loadFromFile("game_over.ttf");
 
 			string str = "Partie terminee ! _\nPour recommencer, pressez r\nSinon, pressez n'importe quelle \nautre touche";
 			text.setFont(font);
