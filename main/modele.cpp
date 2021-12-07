@@ -4,8 +4,8 @@
 #include <stdio.h>    
 #include <stdlib.h>   
 #include <time.h>
-#include <vector>
 #include <curses.h>
+#include <fstream>
 using namespace std;
 
 typedef vector<vector<int> > Plateau;
@@ -52,7 +52,7 @@ vector<tuple<int, int>> coordGen(int s){
 
 
 /** Rajoute avec soit un 2, soit un 4 avec les probabilités souhaitées d'apparition, dans l'une des cases vides.
- *  L'algorithme utilisé écrit se base suyr l'algorithme de permutation aléatoire de Fisher-Yates
+ *  L'algorithme utilisé écrit se base sur l'algorithme de permutation aléatoire de Fisher-Yates
  *  @param plateau un Plateau
  *  @return un nouveau plateau res, correspondant à plateau dans lequel a été ajouté un 2 ou un 4 dans l'une des cases vides.
  **/
@@ -89,6 +89,7 @@ Plateau plateauInitial(int s){
   return init;
 }
 
+int res = 0;
 
 /** déplace les tuiles d'un Plateau vers la gauche et les combine si possible
  *  @param plateau le Plateau
@@ -109,6 +110,7 @@ Plateau plateauInitial(int s){
     for (int j = 0; j <= s-2; j++){
       if ((*plateau)[i][j] != 0 && (*plateau)[i][j] == (*plateau)[i][j+1]){
         (*plateau)[i][j] = 2*(*plateau)[i][j];
+        res += (*plateau)[i][j];
         (*plateau)[i][j+1] = 0;
       }
     } 
@@ -147,6 +149,7 @@ void deplacementDroite(Plateau *plateau){
     for (int j = s-1; j >= 1; j--){
       if ((*plateau)[i][j] != 0 && (*plateau)[i][j] == (*plateau)[i][j-1]){
         (*plateau)[i][j] = 2*(*plateau)[i][j];
+        res += (*plateau)[i][j];
         (*plateau)[i][j-1] = 0;
       }
     } 
@@ -183,6 +186,7 @@ void deplacementHaut(Plateau *plateau){
     for (int j = 0; j <= s-1; j++){
       if ((*plateau)[i][j] != 0 && (*plateau)[i][j] == (*plateau)[i+1][j]){
         (*plateau)[i][j] = 2*(*plateau)[i][j];
+        res += (*plateau)[i][j];
         (*plateau)[i+1][j] = 0;
       }
     } 
@@ -221,6 +225,7 @@ void deplacementBas(Plateau *plateau){
     for (int j = 0; j <= s-1; j++){
       if ((*plateau)[i][j] != 0 && (*plateau)[i][j] == (*plateau)[i-1][j]){
         (*plateau)[i][j] = 2*(*plateau)[i][j];
+        res += (*plateau)[i][j];
         (*plateau)[i-1][j] = 0;
       }
     } 
@@ -331,6 +336,22 @@ string dessine(Plateau *plateau){
   return res;
 }
 
+/**
+  void saveLast(Plateau *plateau){
+  int s = size(*plateau);
+  ofstream fichier;
+  fichier.open("savelastgame.txt");
+  for (int i = 0; i <= (s-1); i++){
+    for (int j = 0; j<= (s-1); j++){
+      fichier << plateau[i][j];
+    }
+    fichier << endl;
+  }
+  fichier.close();
+  return;
+}
+**/
+
 /** permet de savoir si une partie est terminée
  *  @param plateau un Plateau
  *  @return true si le plateau est vide, false sinon
@@ -359,6 +380,7 @@ bool estTermine(Plateau *plateau){
       return false;
     }
   }
+  /*saveLast(*plateau);*/
   return true;
 }
 ;
@@ -388,15 +410,5 @@ bool estGagnant(Plateau *plateau){
  * @return un entier correspondant au score associé au plateau 
  **/
 int score(Plateau *plateau){
-  int s = size(*plateau);
-  int res = 0;
-  for(int i=0;i<s;i++){
-    for (int j = 0; j<s; j++)
-    {
-      if((*plateau)[i][j]>2){
-        res+=(*plateau)[i][j];
-      }
-    }
-  }
   return res;
 }
