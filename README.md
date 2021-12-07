@@ -1,6 +1,6 @@
 # jeu2048
-**Goncalves Joe MI1** joe.goncalves@universite-paris-saclay.fr
-**Chang Yena MI1**  yena.chang@universite-paris-saclay.fr
+Goncalves Joe MI1 joe.goncalves@universite-paris-saclay.fr\
+Chang Yena MI1  yena.chang@universite-paris-saclay.fr
 
 ## Résumé du travail effectué :
 ###### Niveau 0:
@@ -10,7 +10,7 @@
 ###### Niveau 3:
     
 ## Demonstration:
-**function for random generation.**
+**function for random generation.**\
 a naive approach to the random generation would be to use the `rand();` function for both i, j coordinates of the matrice and check if the value contained is 0. however, there is a possiblity that we will fall on the same (i,j) for an indefinite time consecutively (however low the chances due to the uniform distribution).
 to eliminate this possiblity, the function `rgen();` produces a random permutation of the set of all coordinates in our playing matrice (this is completed in linear time thanks to the Fisher-Yates algorithm) and goes through the set with a for loop until it finds a coordinate containing the value 0. then, with our `tireDeuxouQuatre()` function, a 2 or 4 is generated (with 0.9 and 0.1 probability respectively) and placed in the coordinate.
 ```c++
@@ -35,6 +35,42 @@ void rgen(Plateau *plateau){
       break;
     }
   }
+}
+```
+**an example of the deplacement function (right)**\
+the deplacement function is divided into 3 main actions: slide over all coordinates with value 0, then merge identical adjacent values, then slide over all 0s again. the slide actions are nested in a for loop of `k=0 to s-2`. this is because the nested loop, which deplaces the nonzero coordinates over zero coordinates, has a maximum reach of one block (it only moves 1 block at a time). the value `s-2` was chosen because the maximum amount of slides it would require a nonzero coordinate to slide to the furthest zero coordinate (`[1 0 0 0 0 0]`) in a vector of n variables is `n-1`.
+```c++
+void deplacementDroite(Plateau *plateau){
+  int s = size(*plateau);
+  for(int k = 0; k<=s-2;k++){
+    for (int i = 0; i <= s-1; i++){
+      for (int j = 1; j <= s-1; j++){
+        if ((*plateau)[i][j] == 0){
+          (*plateau)[i][j] = (*plateau)[i][j-1];
+          (*plateau)[i][j-1] = 0;
+        }
+      }
+    }
+  } 
+  for (int i = 0; i <= s-1; i++){
+    for (int j = s-1; j >= 1; j--){
+      if ((*plateau)[i][j] != 0 && (*plateau)[i][j] == (*plateau)[i][j-1]){
+        (*plateau)[i][j] = 2*(*plateau)[i][j];
+        res += (*plateau)[i][j];
+        (*plateau)[i][j-1] = 0;
+      }
+    } 
+  }
+  for(int k = 0; k<=s-2;k++){
+    for (int i = 0; i <= s-1; i++){
+      for (int j = 1; j <= s-1; j++){
+        if ((*plateau)[i][j] == 0){
+          (*plateau)[i][j] = (*plateau)[i][j-1];
+          (*plateau)[i][j-1] = 0;
+        }
+      }
+    }
+  }  
 }
 ```
 
