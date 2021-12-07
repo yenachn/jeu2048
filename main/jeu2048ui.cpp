@@ -150,10 +150,10 @@ int main(){
 		Font font;
 		font.loadFromFile("game_over.ttf");
 
-		string str = "Vous avez gagne, BRAVO ! \nPour recommencer une partie, \nappuyez sur r,\nPour quitter, appyez sur q.\nSi vous souhaitez continuer votre partie \nactuelle, cliquez sur n \'importe quelle autre \ntouche";
+		string str = "Congratulations for reaching 2048! \nTo restart, \npress r.\nTo leave, press q.\nTo continue further \nin your game, press any other key.";
 		text.setFont(font);
 		text.setFillColor(Color::White);
-		text.setCharacterSize(20);
+		text.setCharacterSize(70);
 		text.setString(str);
 		text.setPosition(Vector2f(0,130));
 		window.draw(text);
@@ -181,7 +181,7 @@ int main(){
 				Font font;
 			font.loadFromFile("game_over.ttf");
 
-			string str = "Partie terminee ! _\nPour recommencer, pressez r\nSinon, pressez n'importe quelle \nautre touche";
+			string str = "Game over ! _\nTo restart, press r \nOtherwise, press any other key.";
 			text.setFont(font);
 			text.setFillColor(Color::White);
 			text.setCharacterSize(20);
