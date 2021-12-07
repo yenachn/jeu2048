@@ -1,10 +1,8 @@
 CC = g++
-CFLAGS = -wall -g
-main: 2048.o jeu2048ui.o modele.o
-    $(CC)$(CFLAGS) -o main 2048.o jeu2048ui.o modele.o
-2048.o: 2048.cpp
-    $(CC)$(CFLAGS) -c 2048.cpp
-jeu2048ui.o: jeu2048ui.cpp
-    $(CC)$(CFLAGS) -c jeu2048ui.cpp
+CFLAGS = -wall -o
+main : 2048.o modele.o
+	$(CC) -wall -g main 2048.o modele.o
 modele.o: modele.cpp
-    $(CC)$(CFLAGS) -c modele.cpp
+	$(CC)$(CFLAGS) -g ./main/modele.cpp -lncurses -c++20
+2048.o: 2048.cpp
+	$(CC)$(CFLAGS) -g ./main/2048.cpp -lncurses -c++20

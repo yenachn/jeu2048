@@ -180,13 +180,12 @@ int main(){
 			Text text;
 				Font font;
 			font.loadFromFile("game_over.ttf");
-
-			string str = "Game over ! _\nTo restart, press r \nOtherwise, press any other key.";
+			string str = "Game over ! _\nPress r \n		to restart :)";
 			text.setFont(font);
 			text.setFillColor(Color::White);
-			text.setCharacterSize(20);
+			text.setCharacterSize(70);
 			text.setString(str);
-			text.setPosition(Vector2f(0,130));
+			text.setPosition(Vector2f(5,0));
 			window.draw(text);
 			window.display();
 
