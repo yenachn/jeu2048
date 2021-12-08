@@ -16,8 +16,8 @@ Intuitivement, ma première solution était de baliser ces valeurs : `4' -> 8'` 
 (2.1): Nous avons essayé de créer un Makefile pour réaliser l'intégralité du projet (les deux jeux), mais nous avons été bloqués par quelques problèmes que nous n'avons pas pu résoudre dans les délais impartis. Cependant, nous avons écrit 2 fichiers `.sh` séparés pour le jeu avec l'interface utilisateur et le jeu sur console (fonctionnalité testée pendant la soutenance).
 (2.2): We used `github` for our project. https://github.com/yenachn/jeu2048
 ###### Niveau 3:
-(3.2): Notre jeu comportait plusieurs variantes, le plateau de jeu étant de `n` tailles différentes.
-(3.3): Nous avons utilisé `SFML` pour l'interface utilisateur. Fonctionnalité testée en soutenance.
+(3.2): Notre jeu comportait plusieurs variantes, le plateau de jeu étant de `n` tailles différentes. (Fonctionnalité testée en soutenance.)\
+(3.3): Nous avons utilisé `SFML` pour l'interface utilisateur. (Fonctionnalité testée en soutenance.)\
 ![4x4 and 5x5](https://github.com/yenachn/jeu2048/blob/main/variants.png)
 
 ## Demonstration:
