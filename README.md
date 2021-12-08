@@ -18,7 +18,7 @@ Intuitivement, ma première solution était de baliser ces valeurs : `4' -> 8'` 
 ###### Niveau 3:
 (3.2): Notre jeu comportait plusieurs variantes, le plateau de jeu étant de `n` tailles différentes. (Fonctionnalité testée en soutenance.)\
 (3.3): Nous avons utilisé `SFML` pour l'interface utilisateur. (Fonctionnalité testée en soutenance.)\
-![4x4 and 5x5](https://github.com/yenachn/jeu2048/blob/main/variants.png)
+![4x4 and 5x5](https://github.com/yenachn/jeu2048/blob/main/variants.png){:height="50%" width="50%"}
 
 ## Demonstration:
 **Fonction pour la génération aléatoire.**\
