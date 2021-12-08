@@ -122,9 +122,8 @@ bool estTermine(Plateau *plateau){
 (to continue)
 
 ## Organisation du travail : 
-We spent around 20 hours to make this project (however the work wasn't at a regular pace so it is hard to be sure). We used GitHub to work together on the project when we weren't working together on place. 
+Nous avons passé environ 20 heures à réaliser ce projet (cependant le travail n'était pas à un rythme régulier). Nous avons utilisé GitHub pour travailler ensemble sur le projet lorsque nous ne travaillions pas ensemble sur place. Personnellement, j'ai (Yena) passé beaucoup de temps à réfléchir à des méthodes permettant de réécrire des morceaux de code de manière plus efficace et plus agréable sur le plan mathématique.
 
-    
 ## Prise de recul :
 
 (joe) La principale difficulté a été pour moi de m adapter aux methodes de codage de mon binome en effet, nos manière de 
@@ -133,4 +132,5 @@ perdre en efficacité et en temps mais gagner en souplesse. A l inverse mon bino
 de nouvelles maniere de voir les chose qui s eloigne un peu de se que j avais l habitude de voir. Un mal pour un bien cela m a 
 permis de decouvrir de nouvelles methodes, mais a refaire je choisirai tout de meme un peu plus de facilitée a certains niveaux.
 
-(yena) Before I started this project I barely knew any c++ other than how to construct loops. By working on this project I was able to vastly enlargen my skillset and gain a decent fluency in this language.
+(yena) Avant de commencer ce projet, je ne connaissais pratiquement rien du C++, sauf la façon de construire des boucles. En travaillant sur ce projet, j'ai pu élargir considérablement mes compétences et acquérir une bonne maîtrise de ce langage.
+ 
