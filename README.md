@@ -26,6 +26,17 @@ Une approche naïve de la génération aléatoire serait d'utiliser la fonction 
 Pour éliminer cette possibilité, la fonction `rgen();` produit une permutation aléatoire de l'ensemble de toutes les coordonnées de notre matrice de jeu - ceci est réalisé en temps linéaire grâce à l'algorithme de Fisher-Yates (en expérimentant, nous avons aussi expérimenté l'algorithme de Sattolo, qui renvoie des permutations cycliques en temps linéaire mais nous avons décidé de ne pas l'utiliser car il n'est pas complet) et parcourt l'ensemble avec une boucle for jusqu'à ce qu'il trouve une coordonnée contenant la valeur 0. Ensuite, avec notre fonction `tireDeuxouQuatre()`, un 2 ou un 4 est généré (avec une probabilité de 0,9 et 0,1 respectivement) et placé dans la coordonnée.\
 En écrivant mon code, je savais qu'avec la distribution uniforme de `rand()`, le simple fait de choisir des coordonnées aléatoires permettrait d'accomplir la tâche en un temps constant. Cependant, j'ai choisi d'utiliser ma méthode avec la permutation de mon ensemble de coordonnées pour des raisons de complétude mathématique. Comme cela permet d'accomplir la tâche en temps linéaire, j'ai pensé que c'était un sacrifice raisonnable de complexité. J'ai passé quelques heures à essayer de penser à des méthodes de permutation qui accompliraient la tâche en temps linéaire ; cependant, je n'ai pu trouver que quelques méthodes naïves qui l'accompliraient en temps quadratique en faisant une liste liée de taille n, contenant `0,...,n-1`, faire un tableau de taille `n`. Pour `i=0 à n-1`, prendre un nombre aléatoire `k` entre `0 et n-1-i`, puis prendre le kième nombre de la liste liée. Et `permutation[i]` sera la valeur de la kième cellule de la liste. De cette façon, on aura une complexité de somme `k=0 à n-1 de k`, donc `k(k-1)/2` -> `k^2` en complexité. J'ai fait des recherches sur différentes méthodes et j'ai trouvé la méthode de Fisher-Yates, que j'ai intégrée dans mon code.
 ```c++
+vector<tuple<int, int>> coordGen(int s){
+
+  vector<tuple<int, int>> coord;
+  for(int i=0; i<s; i++){
+    for(int j=0; j<s; j++){
+      coord.push_back({i,j});
+    }
+  }
+  return coord;
+}
+
 void rgen(Plateau *plateau){
   int s = size(*plateau);
   vector<tuple<int, int>> coord = coordGen(s);
@@ -119,6 +130,123 @@ bool estTermine(Plateau *plateau){
 }
 ;
 ```
+**Fonction score()**\
+**Boucle principal**\
+```c++
+  loop:
+  do {
+      c = getch();
+      if(c != 255)clear();
+      old = init;
+      deplacement(&init,c);
+      if (old != init){
+        rgen(&init);
+      }
+      printw(dessine(&init).c_str());
+  } while (c != 113 && (cont || !estGagnant(&init)) && !estTermine(&init));
+  ```
+**UI implementation**
+```c++
+typedef vector<vector<RectangleShape>> Grid;
+typedef vector<vector<Text>> TextGrid;
+
+Grid init_grid(int s){
+	Grid grid;
+	grid = Grid(s);
+	for (int i = 0; i < s; i++){
+		for (int j = 0; j < s; j++){
+			RectangleShape rectangle(Vector2f(90.f,90.f));
+			grid[i].push_back(rectangle);		
+		}	
+	}
+	return grid;
+}
+
+void set_positions(Grid *grid){
+	int s = size(*grid);
+	for (int i = 0; i < s; i++){
+		for (int j = 0; j < s; j++)
+		{
+			(*grid)[i][j].setPosition(Vector2f(20+i*100.f,100+j*100.f));
+		}
+	}
+}
+```
+boucle principale (la même que pour les jeux sur console, modifiée pour l'interface utilisateur) :
+```c++
+	loop:
+	do  {
+		c = getch();
+		if(c!=255)clear();
+		old = init;
+		deplacement(&init, c);
+		if(old!=init){
+			rgen(&init);
+		} 
+		Event event;
+		while (window.pollEvent(event)){
+			if (event.type == Event::Closed){
+				window.close();
+			}
+		}
+		draw_update(&window,&grid,&init);
+	} while (window.isOpen() && c!=113 && (cont || !estGagnant(&init)) && !estTermine(&init));
+  ```
+boucles if: jeu gagné / terminé
+```c++
+if (estGagnant(&init)){
+		window.clear(Color::Black);
+		Text text;
+		Font font;
+		font.loadFromFile("game_over.ttf");
+
+		string str = "Congratulations for reaching 2048! \nTo restart, \npress r.\nTo leave, press q.\nTo continue further \nin your game, press any other key.";
+		text.setFont(font);
+		text.setFillColor(Color::White);
+		text.setCharacterSize(70);
+		text.setString(str);
+		text.setPosition(Vector2f(0,130));
+		window.draw(text);
+		window.display();
+
+		c = getch();
+		switch(c){
+			
+		case r:
+			clear();
+			goto startagain;
+		case q:
+			goto end;
+		default:
+			clear();
+			cont = true;
+			goto loop;
+			}
+		}
+
+		if (estTermine(&init)){
+
+			window.clear(Color::Black);
+			Text text;
+				Font font;
+			font.loadFromFile("game_over.ttf");
+			string str = "Game over ! _\nPress r \n		to restart :)";
+			text.setFont(font);
+			text.setFillColor(Color::White);
+			text.setCharacterSize(70);
+			text.setString(str);
+			text.setPosition(Vector2f(5,0));
+			window.draw(text);
+			window.display();
+
+			c = getch();
+			if(c==r) goto startagain;
+			else goto end;
+		}
+	
+	end:
+	endwin();
+  ```
 (to continue)
 
 ## Organisation du travail : 
