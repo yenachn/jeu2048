@@ -4,13 +4,21 @@ Chang Yena MI1  yena.chang@universite-paris-saclay.fr
 
 ## Résumé du travail effectué :
 ###### Niveau 0:
-(0.1), (0.2), (0.3), (0.4), (0.5), (0.6), (0.7), (0.8)
+(0.1), (0.2) (0.3), (0.4), (0.5), (0.6), (0.7)\
+La fonctionnalité a été démontrée pendant la soutenance.
 ###### Niveau 1:
-(1.2), (1.3), (1.4)
+(1.2): Nous avons utilisé la bibliothèque `ncurses` pour recevoir les entrées du clavier en utilisant `getch()` et utilisé un switch case pour différencier les différentes actions correspondant à chaque touche fléchée.\
+(1.3): La fonctionnalité a été démontrée pendant la soutenance.
+(1.4): Le score du jeu 2048 est calculé en ajoutant la valeur additionnée des fusions à chaque fois qu'il y a une fusion. Notre première approche était donc d'utiliser une variable globale `int score` à laquelle nous ajouterions la valeur fusionnée après chaque fusion. Cependant, en raison des contraintes du projet, nous avons dû trouver une méthode pour le calculer sans variable globale.\
+Pour cela, nous devons noter que chaque nombre sur la grille du jeu peut être réécrit sous la forme `2^n`, ou `((((2+2)+4)+8)+...)`. Par conséquent, en supposant que la génération aléatoire ne génère que des 2, nous pouvons calculer le score en ajoutant `(2+2) + ((2+2)+4) + (2+2) + (((2+2)+4)+8) + (2+2) + ((2+2)+4). ...` qui peut être réécrit comme `2^2 + 2^3 + 2^2 + 2^4 + 2^2 + 2^3 + ...` puis simplifié comme `(n-1)2^2 + (n-2)2^3 + ...`. Cependant, nous devons prendre en compte les 4 générés aléatoirement. La méthode simple serait de compter le nombre de fois qu'un 4 a été généré et de simplement soustraire ce nombre de `(2^2)` de notre somme précédente, et pour ce faire nous devons considérer 2 cas : un où il y avait un 4 généré aléatoirement fusionné avec un 4 qui était une fusion entre 2 2s, et un où il y a deux 4 générés aléatoirement qui fusionnent ensemble.\
+Intuitivement, ma première solution était de baliser ces valeurs : `4' -> 8'` et `4' -> 8''` dans le dernier cas où il y a deux 4 générés aléatoirement. Pour écrire cela en code, mon idée était de changer les nombres : quand un 4 est généré aléatoirement, ce serait en fait un 3 qui se comporte simplement comme un 4. Par conséquent, nous enregistrerions deux valeurs pour les valeurs de fusion qui partent d'un 4 généré aléatoirement : `3 + 4 -> 7` et `4 + 4 -> 8`. Cela permet de vérifier facilement l'origine de nos valeurs de fusion sur notre `plateau` actuel. Pour les nombres qui peuvent être décomposés en `2^n-1 (n \in N)`, cela a commencé à partir d'un 4 généré aléatoirement fusionné avec un 4 fusionné 2+2, et pour les nombres qui peuvent être décomposés en `2^n-2`, 2 4 générés aléatoirement.\
 ###### Niveau 2:
-(2.1) treated but non functional, (2.2)
+(2.1): Nous avons essayé de créer un Makefile pour réaliser l'intégralité du projet (les deux jeux), mais nous avons été bloqués par quelques problèmes que nous n'avons pas pu résoudre dans les délais impartis. Cependant, nous avons écrit 2 fichiers `.sh` séparés pour le jeu avec l'interface utilisateur et le jeu sur console (fonctionnalité testée pendant la soutenance).
+(2.2): We used `github` for our project. https://github.com/yenachn/jeu2048
 ###### Niveau 3:
-(3.2), (3.3)
+(3.2): Notre jeu comportait plusieurs variantes, le plateau de jeu étant de `n` tailles différentes.
+(3.3): Nous avons utilisé `SFML` pour l'interface utilisateur. Fonctionnalité testée en soutenance.
+![4x4 and 5x5](https://github.com/yenachn/jeu2048/blob/main/variants.png)
 
 ## Demonstration:
 **function for random generation.**\
