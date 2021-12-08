@@ -18,7 +18,7 @@ Intuitivement, ma première solution était de baliser ces valeurs : `4' -> 8'` 
 ###### Niveau 3:
 (3.2): Notre jeu comportait plusieurs variantes, le plateau de jeu étant de `n` tailles différentes. (Fonctionnalité testée en soutenance.)\
 (3.3): Nous avons utilisé `SFML` pour l'interface utilisateur. (Fonctionnalité testée en soutenance.)\
-![4x4 and 5x5](https://github.com/yenachn/jeu2048/blob/main/variants.png){:height="50%" width="50%"}
+![4x4 and 5x5](https://github.com/yenachn/jeu2048/blob/main/variants.png)
 
 ## Demonstration:
 **Fonction pour la génération aléatoire.**\
@@ -49,8 +49,8 @@ void rgen(Plateau *plateau){
   }
 }
 ```
-**an example of the deplacement function (right)**\
-the deplacement function is divided into 3 main actions: slide over all coordinates with value 0, then merge identical adjacent values, then slide over all 0s again. the slide actions are nested in a for loop of `k=0 to s-2`. this is because the nested loop, which deplaces the nonzero coordinates over zero coordinates, has a maximum reach of one block (it only moves 1 block at a time). the value `s-2` was chosen because the maximum amount of slides it would require a nonzero coordinate to slide to the furthest zero coordinate ([1 0 0 0 0 0]) in a vector of n variables is `n-1`.
+**Un exemple de la fonction de déplacement (à droite)**\
+La fonction de déplacement est divisée en 3 actions principales : glisser sur toutes les coordonnées de valeur 0, puis fusionner les valeurs adjacentes identiques, puis glisser à nouveau sur tous les 0. les actions de glissement sont imbriquées dans une boucle for de `k=0 à s-2`. La valeur `s-2` a été choisie parce que le nombre maximum de glissements nécessaires à une coordonnée non nulle pour atteindre la coordonnée nulle la plus éloignée ([1 0 0 0 0 0]) dans un vecteur de n variables est `n-1`.
 ```c++
 void deplacementDroite(Plateau *plateau){
   int s = size(*plateau);
@@ -85,10 +85,10 @@ void deplacementDroite(Plateau *plateau){
   }  
 }
 ```
-**function to check game end.**\
-the game ends at the satisfaction the following condition:\
-all coordinates in the matrice have different adjacent values that are not equal to zero (no further slides are possible).\
-in this function i used a simple method: check the matrice from 0 to (s-2) if the value at i+1 or j+1 has the same value to the checked coordinate and is not equal to 0. we came across a small error: we weren't checking the matrice for equal adjacents in plateau[i][s-1] and in plateau[s-1][i] (i from 0 to s-2). also, our code did not touch the plateau[s-1][s-1] value at all (if it is 0 and if it has equal adjacents). we then included further conditions in our function to include these negligences.
+**Function to check game end.**\
+La partie se termine à la satisfaction de la condition suivante :\
+Toutes les coordonnées dans la matrice ont des valeurs adjacentes différentes qui ne sont pas égales à zéro (aucun autre glissement n'est possible).\
+Dans cette fonction j'ai utilisé une méthode simple : vérifier la matrice de 0 à (s-2) si la valeur à i+1 ou j+1 a la même valeur que la coordonnée vérifiée et n'est pas égale à 0. Nous avons rencontré une petite erreur : nous ne vérifions pas la matrice pour des adjacents égaux dans plateau[i][s-1] et dans plateau[s-1][i] (i de 0 à s-2). De plus, notre code ne touchait pas du tout la valeur de plateau[s-1][s-1] (si elle est égale à 0 et si elle a des adjacents égaux). Nous avons alors inclus des conditions supplémentaires (glissements unidirectionnels sur les coordonnées [i][(s-1)] et [(s-1)][i] de la matrice) dans notre fonction pour inclure ces négligences.
 ```c++
 bool estTermine(Plateau *plateau){
   int s = size(*plateau);
