@@ -88,7 +88,7 @@ void deplacementDroite(Plateau *plateau){
 **Function to check game end.**\
 La partie se termine à la satisfaction de la condition suivante :\
 Toutes les coordonnées dans la matrice ont des valeurs adjacentes différentes qui ne sont pas égales à zéro (aucun autre glissement n'est possible).\
-Dans cette fonction j'ai utilisé une méthode simple : vérifier la matrice de 0 à (s-2) si la valeur à i+1 ou j+1 a la même valeur que la coordonnée vérifiée et n'est pas égale à 0. Nous avons rencontré une petite erreur : nous ne vérifions pas la matrice pour des adjacents égaux dans plateau[i][s-1] et dans plateau[s-1][i] (i de 0 à s-2). De plus, notre code ne touchait pas du tout la valeur de plateau[s-1][s-1] (si elle est égale à 0 et si elle a des adjacents égaux). Nous avons alors inclus des conditions supplémentaires (glissements unidirectionnels sur les coordonnées [i][(s-1)] et [(s-1)][i] de la matrice) dans notre fonction pour inclure ces négligences.
+Dans cette fonction j'ai utilisé une méthode simple : vérifier la matrice de `0 à (s-2)` si la valeur à `i+1` ou `j+1` a la même valeur que la coordonnée vérifiée et n'est pas égale à 0. Nous avons rencontré une petite erreur : nous ne vérifions pas la matrice pour des adjacents égaux dans `plateau[i][s-1]` et dans `plateau[s-1][i]` (`i de 0 à s-2`). De plus, notre code ne touchait pas du tout la valeur de `plateau[s-1][s-1]` (si elle est égale à 0 et si elle a des adjacents égaux). Nous avons alors inclus des conditions supplémentaires (glissements unidirectionnels sur les coordonnées `[i][(s-1)]` et `[(s-1)][i]` de la matrice) dans notre fonction pour inclure ces négligences.
 ```c++
 bool estTermine(Plateau *plateau){
   int s = size(*plateau);
