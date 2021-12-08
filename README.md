@@ -14,7 +14,7 @@ Pour cela, nous devons noter que chaque nombre sur la grille du jeu peut être r
 Intuitivement, ma première solution était de baliser ces valeurs : `4' -> 8'` et `4' -> 8''` dans le dernier cas où il y a deux 4 générés aléatoirement. Pour écrire cela en code, mon idée était de changer les nombres : quand un 4 est généré aléatoirement, ce serait en fait un 3 qui se comporte simplement comme un 4. Par conséquent, nous enregistrerions deux valeurs pour les valeurs de fusion qui partent d'un 4 généré aléatoirement : `3 + 4 -> 7` et `4 + 4 -> 8`. Cela permet de vérifier facilement l'origine de nos valeurs de fusion sur notre `plateau` actuel. Pour les nombres qui peuvent être décomposés en `2^n-1 (n \in N)`, cela a commencé à partir d'un 4 généré aléatoirement fusionné avec un 4 fusionné 2+2, et pour les nombres qui peuvent être décomposés en `2^n-2`, les 2 4 ayant été générés aléatoirement.
 ###### Niveau 2:
 (2.1): Nous avons essayé de créer un Makefile pour réaliser l'intégralité du projet (les deux jeux), mais nous avons été bloqués par quelques problèmes que nous n'avons pas pu résoudre dans les délais impartis. Cependant, nous avons écrit 2 fichiers `.sh` séparés pour le jeu avec l'interface utilisateur et le jeu sur console (fonctionnalité testée pendant la soutenance).\
-(2.2): We used `github` for our project. https://github.com/yenachn/jeu2048
+(2.2): Nous avons utilisé `github` pour notre projet. https://github.com/yenachn/jeu2048
 ###### Niveau 3:
 (3.2): Notre jeu comportait plusieurs variantes, le plateau de jeu étant de `n` tailles différentes. (Fonctionnalité testée en soutenance.)\
 (3.3): Nous avons utilisé `SFML` pour l'interface utilisateur. (Fonctionnalité testée en soutenance.)\
