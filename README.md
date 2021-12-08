@@ -252,6 +252,10 @@ if (estGagnant(&init)){
 ## Organisation du travail : 
 Nous avons passé environ 20 heures à réaliser ce projet (cependant le travail n'était pas à un rythme régulier). Nous avons utilisé GitHub pour travailler ensemble sur le projet lorsque nous ne travaillions pas ensemble sur place. Personnellement, j'ai (Yena) passé beaucoup de temps à réfléchir à des méthodes permettant de réécrire des morceaux de code de manière plus efficace et plus agréable sur le plan mathématique.
 
+#### Répartition du travail:
+Yena : a codé la structure principale de `modele.cpp`, `2048.cpp`, `jeu2048ui.cpp`. A écrit la majorité du rapport expliquant le code.\
+Joe : a codé sur `modele.cpp` et `2048. cpp`. A testé le code pour qu'il corresponde aux consignes du projet et a ajouté des démonstrations sur Jupyterhub. 
+
 ## Prise de recul :
 
 (joe) La principale difficulté a été pour moi de m adapter aux methodes de codage de mon binome en effet, nos manière de 
